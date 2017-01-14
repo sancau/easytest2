@@ -1,7 +1,30 @@
 {
-  "date_created": "2017-01-05T12:32:04.436068",
+  "date_created": "2017-01-14T15:13:24.233236",
   "humidity": [],
   "report": null,
+  "responsible_specialist": "Ксенофонтов Б.А.",
+  "settings": {
+    "humidity": {
+      "max_deviation": {
+        "SOME_EXCEPTION": [
+          2,
+          2
+        ],
+        "default": [
+          2,
+          2
+        ]
+      },
+      "round_to": 1,
+      "slice_length": 10
+    },
+    "temperature": {
+      "max_deviation": 2,
+      "round_to": 1,
+      "sensors_total": 8,
+      "slice_length": 10
+    }
+  },
   "specialist": null,
   "system": null,
   "temperature": [

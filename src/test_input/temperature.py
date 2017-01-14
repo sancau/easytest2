@@ -10,9 +10,6 @@ TEST_TEMPERATURE_MODE = {
             "sensors_count": "8"
         }   
     ],
-    "sensors_total": "8",
-    "slice_length": "10",
-    "round_to": "1",
     "cp": [
         "0", "0", "0", "0", "0",
         "0", "0", "0", "0", "0"
@@ -20,6 +17,5 @@ TEST_TEMPERATURE_MODE = {
     "md": [
         "0", "0", "0", "0", "0",
         "0", "0", "0", "0", "0"
-    ],
-    "max_deviation": "2"
+    ]
 }
