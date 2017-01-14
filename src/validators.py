@@ -88,11 +88,11 @@ def validate_test_settings(settings):  # TODO more type specific validation
             'max_deviation': 'Maximum allowed deviation to pass the test.'
         },
         'humidity': {
-            'slice_length': 10,
-            'round_to': 1,
+            'slice_length': 'The number of iterations to use in test logic.',
+            'round_to': 'Values will be rounded to the given number of digits.',
             'max_deviation': {
                 'temperature': 'Maximum allowed deviation to pass the test.',
-                'humidity': {}, # k -> v as humidity value -> tuple(pos, neg)
+                'humidity': {},  # k -> v as humidity value -> tuple(pos, neg)
             }
         }
     }

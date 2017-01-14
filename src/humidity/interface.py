@@ -1,5 +1,7 @@
 import pandas as pd
 
+from humidity.logic import calculate_mode
+
 
 def parse_xlsx(data):
     dates = []
@@ -41,10 +43,16 @@ def handle_mode(mode):
 
     log = parse_xlsx((log['file'], log['desc']) for log in mode['logs'])
 
-    # splits log data in slices of required length
-    # check if the test for slice is passed
-    # if passed build result dict and return it
-    # else try next slice till success or end of data
-    # return result dict
+    log.drop(['DT1_temp', 'DT2_temp'], axis=1, inplace=True)  # no need
 
-    return log  # TODO return result dict
+    slice_length = mode['slice_length']
+
+    cursor = 0
+    while True:
+        log_slice = log[cursor: cursor + slice_length]
+        result = calculate_mode(mode, log_slice)
+
+        if log_slice.shape[0] < 10 or result['result']['summary_mode_result']:
+            return result  # if test totally passed return result or log ended
+        else:
+            cursor += 1  # move further
