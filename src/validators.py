@@ -55,8 +55,8 @@ def validate_humidity_mode(mode):  # TODO more type specific validation
             'temperature': 'Target temperature value.'
         },
         'md': {
-            'hum': 'Humidity measurement device values as a list.',
-            'temp': 'Temperature measurement device values as a list.'
+            'humidity': 'Humidity measurement device values as a list.',
+            'temperature': 'Temperature measurement device values as a list.'
         }
     }
 

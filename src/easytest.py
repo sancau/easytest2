@@ -1,10 +1,13 @@
 # -*- coding: utf8 -*-
+"""
+Easytest2 application
+"""
+
 
 import json
 
-from datetime import datetime
-
 from temperature.interface import TemperatureModeHandler
+from humidity.interface import handle_mode
 
 from settings import DEFAULT_TEST
 from validators import validate_temperature_mode
@@ -27,7 +30,7 @@ class Test:
     
     def calculate(self):  # calculates/recalculates all modes in the test
         modes = {
-            'humidity': lambda x: {'test': 42},  # TODO
+            'humidity': handle_mode,
             'temperature': TemperatureModeHandler().handle
         }
 
