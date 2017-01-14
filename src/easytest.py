@@ -11,6 +11,7 @@ from humidity.interface import handle_mode
 
 from settings import DEFAULT_TEST
 from validators import validate_temperature_mode
+from validators import validate_humidity_mode
 from validators import validate_test_settings
 from utils import json_handler
 
@@ -75,4 +76,9 @@ class Test:
             print('Validation errors:', errors)
 
     def add_humidity_mode(self, mode):  # adds a humidity mode to the test
-        raise NotImplementedError('This method is not implemented yet')
+        errors = validate_humidity_mode(mode)
+        if not errors:
+            mode.update(self.data['settings']['humidity'])  # add settings
+            self.data['humidity'].append(mode)
+        else:
+            print('Validation errors:', errors)

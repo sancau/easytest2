@@ -27,7 +27,8 @@ def parse_csv(data):
 
 def mode_valid(mode):
     return all(
-        mode['slice_length'] == len(mode['md'][i]) for i in ['hum', 'temp'])
+        mode['slice_length'] == len(mode['md'][i])
+        for i in ['humidity', 'temperature'])
 
 
 def calculate(mode_slice):
