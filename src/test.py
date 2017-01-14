@@ -7,6 +7,12 @@ from test_input.humidity import TEST_HUMIDITY_MODE
 t = Test()
 t.add_temperature_mode(TEST_TEMPERATURE_MODE)
 t.add_humidity_mode(TEST_HUMIDITY_MODE)
+t.add_temperature_mode(TEST_TEMPERATURE_MODE)
+t.add_humidity_mode(TEST_HUMIDITY_MODE)
+t.add_temperature_mode(TEST_TEMPERATURE_MODE)
+t.add_humidity_mode(TEST_HUMIDITY_MODE)
+t.add_temperature_mode(TEST_TEMPERATURE_MODE)
+t.add_humidity_mode(TEST_HUMIDITY_MODE)
 
 t.calculate()
 

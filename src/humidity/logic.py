@@ -5,10 +5,6 @@ Humidity mode calculation logic (BL)
 from statistics import mean as python_mean
 
 
-def get_abs_distance(a, b):
-    return abs(max([a, b]) - min([a, b]))
-
-
 def calculate_mode(mode, log_slice):
     #######################
     # TEST BUSINESS LOGIC #
@@ -16,6 +12,12 @@ def calculate_mode(mode, log_slice):
 
     def mean(arr):
         return round(python_mean(arr), mode['round_to'])
+
+    def rounded(number):
+        return round(number, mode['round_to'])
+
+    def get_abs_distance(a, b):
+        return rounded(abs(max([a, b]) - min([a, b])))
 
     date = log_slice.date.max()
 
@@ -27,8 +29,6 @@ def calculate_mode(mode, log_slice):
 
     target_humidity = mode['target']['humidity']
     hum_max_dev_settings = mode['max_deviation']['humidity']
-
-    print(hum_max_dev_settings)
 
     # if not special setting use default values
     humidity_max_deviation = \
@@ -58,6 +58,10 @@ def calculate_mode(mode, log_slice):
         },
         'md_temperature': mode['md']['temperature'],
         'md_humidity': mode['md']['humidity'],
+        'dt1_humidity': dt1_humidity,
+        'dt2_humidity': dt2_humidity,
+        'kt_humidity': kt_humidity,
+        'kt_temperature': kt_temperature,
         'dt1_mean_temperature': mean(dt1_humidity),
         'dt2_mean_temperature': mean(dt2_humidity),
         'kt_mean_temperature': mean(kt_temperature),
@@ -69,24 +73,22 @@ def calculate_mode(mode, log_slice):
         'md_delta_humidity': md_delta_humidity,
         'positive_deviation': positive_deviation,
         'negative_deviation': negative_deviation,
-        'humidity_deviation': max_mean_humidity - min_mean_humidity,
+        'humidity_deviation': rounded(max_mean_humidity - min_mean_humidity),
         'result': {}
     }
 
     if positive_deviation:
+        tmp = rounded(abs(humidity_max_deviation[0]) - md_delta_humidity)
         output['result']['positive'] = {
-            'passed': positive_deviation < (abs(humidity_max_deviation[0]) -
-                                            md_delta_humidity),
-            'equation_result': (abs(humidity_max_deviation[0]) -
-                                md_delta_humidity)
+            'passed': positive_deviation < tmp,
+            'equation_result': tmp
         }
 
     if negative_deviation:
+        tmp = rounded(abs(humidity_max_deviation[1]) - md_delta_humidity)
         output['result']['negative'] = {
-            'passed': negative_deviation < (abs(humidity_max_deviation[1]) -
-                                            md_delta_humidity),
-            'equation_result': (abs(humidity_max_deviation[1]) -
-                                md_delta_humidity)
+            'passed': negative_deviation < tmp,
+            'equation_result': tmp
         }
 
     output['result']['summary_mode_result'] = (

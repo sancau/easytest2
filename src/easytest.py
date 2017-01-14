@@ -37,8 +37,8 @@ class Test:
 
         for mode_type, handler in modes.items():
             for index, mode in enumerate(self.data[mode_type]):
-                this = self.data[mode_type][index]
-                self.data[mode_type][index] = handler(this)  
+                this = self.data[mode_type][index]['mode']
+                self.data[mode_type][index]['processed'] = handler(this)
 
     def create_report(self):
         raise NotImplementedError('This method is not implemented yet')
@@ -71,7 +71,7 @@ class Test:
         errors = validate_temperature_mode(mode)
         if not errors:
             mode.update(self.data['settings']['temperature'])  # add settings
-            self.data['temperature'].append(mode)
+            self.data['temperature'].append({'mode': mode})
         else:
             print('Validation errors:', errors)
 
@@ -79,6 +79,6 @@ class Test:
         errors = validate_humidity_mode(mode)
         if not errors:
             mode.update(self.data['settings']['humidity'])  # add settings
-            self.data['humidity'].append(mode)
+            self.data['humidity'].append({'mode': mode})
         else:
             print('Validation errors:', errors)
