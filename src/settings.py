@@ -33,3 +33,7 @@ DEFAULT_TEST = {
         }
     }
 }
+
+MAIN_TPL = r'report/templates/main_tpl.docx'
+TEMPERATURE_MODE_TPL = r'report/templates/tmode_tpl.docx'
+HUMIDITY_MODE_TPL = r'report/templates/hmode_tpl.docx'
