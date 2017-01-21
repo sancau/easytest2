@@ -1,7 +1,10 @@
 # coding=utf-8
 import os
+from datetime import datetime
 
 from docxtpl import DocxTemplate
+
+from report.utils import get_verbose_date
 
 from settings import MAIN_TPL
 from settings import HUMIDITY_MODE_TPL
@@ -43,7 +46,59 @@ class ReportBuilder:
     @staticmethod
     def build_main_ctx(test):
         return {
-
+            'report': {
+                'date': get_verbose_date(datetime.now()),
+                'number': 'НОМЕР ПРОТОКОЛА',
+                'specialist': test.data['specialist'],
+                'responsible_specialist': test.data['responsible_specialist']
+            },
+            'system': {
+                'name': 'НАЗВАНИЕ СИСТЕМЫ',
+                'year_of_production': 'ГОД ВЫПУСКА',
+                'manufacturer': 'ИЗГОТОВИТЕЛЬ',
+                'factory_number': 'ЗАВ. НОМЕР',
+                'description': 'ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ',
+                'test_program': 'ПРОГРАММА АТТЕСТАЦИИ',
+                'test_method': 'МЕТОДИКА АТТЕСТАЦИИ',
+            },
+            'tools': [
+                'ПРИБОР 1',
+                'ПРИБОР 2',
+                'ПРИБОР 3',
+                'ПРИБОР 4',
+                'ПРИБОР 5'
+            ],
+            'modes': {
+                'summary': {
+                    'max_tmode': 'МАКС. РЕЖИМ ТЕМПЕРАТУРЫ',
+                    'min_tmode': 'МИН. РЕЖИМ ТЕМПЕРАТУРЫ'
+                },
+                'tmodes': [  # TODO sort by target_temp
+                    {
+                        'verbose_temp': 'РЕЖИМ 1'
+                    },
+                    {
+                        'verbose_temp': 'РЕЖИМ 2'
+                    },
+                    {
+                        'verbose_temp': 'РЕЖИМ 3'
+                    }
+                ],
+                'hmodes': [  # TODO sort by target_hum then by target_temp
+                    {
+                        'verbose_hum': 'РЕЖИМ 1 (ВЛАГА)',
+                        'verbose_temp': 'РЕЖИМ 1 (ТЕМПЕРАТУРА)'
+                    },
+                    {
+                        'verbose_hum': 'РЕЖИМ 2 (ВЛАГА)',
+                        'verbose_temp': 'РЕЖИМ 2 (ТЕМПЕРАТУРА)'
+                    },
+                    {
+                        'verbose_hum': 'РЕЖИМ 3 (ВЛАГА)',
+                        'verbose_temp': 'РЕЖИМ 3 (ТЕМПЕРАТУРА)'
+                    }
+                ]
+            }
         }
 
     def build_additions(self):

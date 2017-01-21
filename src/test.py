@@ -14,6 +14,8 @@ t.add_humidity_mode(TEST_HUMIDITY_MODE)
 t.add_temperature_mode(TEST_TEMPERATURE_MODE)
 t.add_humidity_mode(TEST_HUMIDITY_MODE)
 
+t.data['specialist'] = 'Татчин А.В.'
+
 t.calculate()
 
 t.path = 'tests/test_1.json'

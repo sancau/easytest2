@@ -1,5 +1,5 @@
 {
-  "date_created": "2017-01-21T14:14:13.137659",
+  "date_created": "2017-01-21T21:06:09.556296",
   "humidity": [
     {
       "mode": {
@@ -717,7 +717,7 @@
       "slice_length": 10
     }
   },
-  "specialist": null,
+  "specialist": "Татчин А.В.",
   "system": null,
   "temperature": [
     {
