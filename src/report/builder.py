@@ -50,7 +50,8 @@ class ReportBuilder:
                 'date': get_verbose_date(datetime.now()),
                 'number': 'НОМЕР ПРОТОКОЛА',
                 'specialist': test.data['specialist'],
-                'responsible_specialist': test.data['responsible_specialist']
+                'responsible_specialist': test.data['responsible_specialist'],
+                'total_additions_count': len(test.data['humidity']) + len(test.data['temperature'])
             },
             'system': {
                 'name': 'НАЗВАНИЕ СИСТЕМЫ',
@@ -71,7 +72,15 @@ class ReportBuilder:
             'modes': {
                 'summary': {
                     'max_tmode': 'МАКС. РЕЖИМ ТЕМПЕРАТУРЫ',
-                    'min_tmode': 'МИН. РЕЖИМ ТЕМПЕРАТУРЫ'
+                    'min_tmode': 'МИН. РЕЖИМ ТЕМПЕРАТУРЫ',
+                    'max_hmode_hum': 'МАКС. РЕЖИМ ВЛАГИ',
+                    'min_hmode_temp': 'МИН. РЕЖИМ ТЕМП. ВЛАГИ',
+                    'max_hmode_temp': 'МАКС. РЕЖИМ ТЕМП. ВЛАГИ',
+                    'tmax_deviation': 'МАКС. НЕРАВНОМЕРНОСТЬ ТЕМПЕРАТУРЫ',
+                    'tmax_md_delta': 'МАКС. ПОГРЕШНОСТЬ ИУ ТЕМПЕРАТУРЫ',
+                    'tmax_amplitude': 'МАКС. АМПЛИТУДА КОЛЕБАНИЙ ТЕМПЕРАТУРЫ',
+                    'hmax_deviation': 'МАКС. НЕРАВНОМЕРНОСТЬ ВЛАГИ',
+                    'hmax_md_delta': 'МАКС. ПОГРЕШНОСТЬ ИУ ВЛАГИ',
                 },
                 'tmodes': [  # TODO sort by target_temp
                     {
