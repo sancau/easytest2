@@ -84,27 +84,25 @@ class ReportBuilder:
                 },
                 'tmodes': [  # TODO sort by target_temp
                     {
-                        'verbose_temp': 'РЕЖИМ 1'
-                    },
-                    {
-                        'verbose_temp': 'РЕЖИМ 2'
-                    },
-                    {
-                        'verbose_temp': 'РЕЖИМ 3'
+                        'verbose_temp': 'РЕЖИМ 1',
+                        'positive_delta': 'ПОЛОЖИТЕЛЬНОЕ ОТКЛОНЕНИЕ ТЕМП.',
+                        'negative_delta': 'ОТРИЦАТЕЛЬНОЕ ОТКЛОНЕНИЕ ТЕМП.',
+                        'md_delta': 'ПОГРЕШНОСТЬ ИУ',
+                        'positive_total_error': 'ПОЛ. СУММ. ПОГРЕШНОСТЬ Т',
+                        'negative_total_error': 'ОТР. СУММ. ПОГРЕШНОСТЬ Т',
+                        'verbose_max_deviation': 'ДОПУСК Т',
                     }
                 ],
                 'hmodes': [  # TODO sort by target_hum then by target_temp
                     {
                         'verbose_hum': 'РЕЖИМ 1 (ВЛАГА)',
-                        'verbose_temp': 'РЕЖИМ 1 (ТЕМПЕРАТУРА)'
-                    },
-                    {
-                        'verbose_hum': 'РЕЖИМ 2 (ВЛАГА)',
-                        'verbose_temp': 'РЕЖИМ 2 (ТЕМПЕРАТУРА)'
-                    },
-                    {
-                        'verbose_hum': 'РЕЖИМ 3 (ВЛАГА)',
-                        'verbose_temp': 'РЕЖИМ 3 (ТЕМПЕРАТУРА)'
+                        'verbose_temp': 'РЕЖИМ 1 (ТЕМПЕРАТУРА)',
+                        'positive_delta': 'ПОЛОЖИТЕЛЬНОЕ ОТКЛОНЕНИЕ ВЛАГИ',
+                        'negative_delta': 'ОТРИЦАТЕЛЬНОЕ ОТКЛОНЕНИЕ ВЛАГИ',
+                        'md_delta': 'ПОГРЕШНОСТЬ ИУ',
+                        'positive_total_error': 'ПОЛ. СУММ. ПОГРЕШНОСТЬ ВЛ',
+                        'negative_total_error': 'ОТР. СУММ. ПОГРЕШНОСТЬ ВЛ',
+                        'verbose_max_deviation': 'ДОПУСК ВЛАГА',
                     }
                 ]
             }
