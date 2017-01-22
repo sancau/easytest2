@@ -45,30 +45,52 @@ class ReportBuilder:
 
     @staticmethod
     def build_main_ctx(test):
+        def btmode(mode):
+            res = mode['processed']['values']
+            pos_delta = res.get('positive_delta', '')
+            neg_delta = res.get('negative_delta', '')
+            return {
+                'target': mode['mode']['target'],
+                'positive_delta': pos_delta,
+                'negative_delta': '-' + str(neg_delta),
+                'md_delta': res['md_delta'],
+                'positive_total_error': pos_delta + res['md_delta'] if pos_delta else '',
+                'negative_total_error': '-' + str(neg_delta + res['md_delta']) if neg_delta else '',
+                'verbose_max_deviation': u'\u00B1' + str(res['max_deviation'])
+            }
+
+        def bhmode(mode):
+            res = mode['processed']
+            pos_delta = res.get('positive_deviation', '')
+            neg_delta = res.get('negative_deviation', '')
+
+            def get_verbose_max_dev_hum(dev):
+                print(dev)
+                if dev['humidity'][0] + dev['humidity'][1] == 0:
+                    return u'\u00B1' + str(dev['humidity'][0])
+                else:
+                    return '+' + str(dev['humidity'][0]) + ', ' + '-' + str(dev['humidity'][1])
+
+            return {
+                'verbose_hum': res['target']['humidity'],
+                'verbose_temp': res['target']['temperature'],
+                'positive_delta': pos_delta,
+                'negative_delta': '-' + str(neg_delta),
+                'md_delta': res['md_delta_humidity'],
+                'positive_total_error': pos_delta + res['md_delta_humidity'] if pos_delta else '',
+                'negative_total_error': '-' + str(neg_delta + res['md_delta_humidity']) if neg_delta else '',
+                'verbose_max_deviation': get_verbose_max_dev_hum(res['max_allowed_deviation'])
+            }
+
         return {
             'report': {
                 'date': get_verbose_date(datetime.now()),
-                'number': 'НОМЕР ПРОТОКОЛА',
                 'specialist': test.data['specialist'],
                 'responsible_specialist': test.data['responsible_specialist'],
                 'total_additions_count': len(test.data['humidity']) + len(test.data['temperature'])
             },
-            'system': {
-                'name': 'НАЗВАНИЕ СИСТЕМЫ',
-                'year_of_production': 'ГОД ВЫПУСКА',
-                'manufacturer': 'ИЗГОТОВИТЕЛЬ',
-                'factory_number': 'ЗАВ. НОМЕР',
-                'description': 'ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ',
-                'test_program': 'ПРОГРАММА АТТЕСТАЦИИ',
-                'test_method': 'МЕТОДИКА АТТЕСТАЦИИ',
-            },
-            'tools': [
-                'ПРИБОР 1',
-                'ПРИБОР 2',
-                'ПРИБОР 3',
-                'ПРИБОР 4',
-                'ПРИБОР 5'
-            ],
+            'system': test.data['system'],
+            'tools': test.data['tools'],
             'modes': {
                 'summary': {
                     'max_tmode': 'МАКС. РЕЖИМ ТЕМПЕРАТУРЫ',
@@ -80,31 +102,12 @@ class ReportBuilder:
                     'tmax_md_delta': 'МАКС. ПОГРЕШНОСТЬ ИУ ТЕМПЕРАТУРЫ',
                     'tmax_amplitude': 'МАКС. АМПЛИТУДА КОЛЕБАНИЙ ТЕМПЕРАТУРЫ',
                     'hmax_deviation': 'МАКС. НЕРАВНОМЕРНОСТЬ ВЛАГИ',
-                    'hmax_md_delta': 'МАКС. ПОГРЕШНОСТЬ ИУ ВЛАГИ',
+                    'hmax_md_delta': 'МАКС. ПОГРЕШНОСТЬ ИУ ВЛАГИ'
                 },
-                'tmodes': [  # TODO sort by target_temp
-                    {
-                        'verbose_temp': 'РЕЖИМ 1',
-                        'positive_delta': 'ПОЛОЖИТЕЛЬНОЕ ОТКЛОНЕНИЕ ТЕМП.',
-                        'negative_delta': 'ОТРИЦАТЕЛЬНОЕ ОТКЛОНЕНИЕ ТЕМП.',
-                        'md_delta': 'ПОГРЕШНОСТЬ ИУ',
-                        'positive_total_error': 'ПОЛ. СУММ. ПОГРЕШНОСТЬ Т',
-                        'negative_total_error': 'ОТР. СУММ. ПОГРЕШНОСТЬ Т',
-                        'verbose_max_deviation': 'ДОПУСК Т',
-                    }
-                ],
-                'hmodes': [  # TODO sort by target_hum then by target_temp
-                    {
-                        'verbose_hum': 'РЕЖИМ 1 (ВЛАГА)',
-                        'verbose_temp': 'РЕЖИМ 1 (ТЕМПЕРАТУРА)',
-                        'positive_delta': 'ПОЛОЖИТЕЛЬНОЕ ОТКЛОНЕНИЕ ВЛАГИ',
-                        'negative_delta': 'ОТРИЦАТЕЛЬНОЕ ОТКЛОНЕНИЕ ВЛАГИ',
-                        'md_delta': 'ПОГРЕШНОСТЬ ИУ',
-                        'positive_total_error': 'ПОЛ. СУММ. ПОГРЕШНОСТЬ ВЛ',
-                        'negative_total_error': 'ОТР. СУММ. ПОГРЕШНОСТЬ ВЛ',
-                        'verbose_max_deviation': 'ДОПУСК ВЛАГА',
-                    }
-                ]
+                'tmodes': [btmode(mode) for mode in sorted(test.data['temperature'], key=lambda k: k['mode']['target'])],
+
+                # TODO sort by target_hum then by target_temp
+                'hmodes': [ bhmode(mode) for mode in sorted(test.data['humidity'], key=lambda k: k['mode']['target']['humidity'])],
             }
         }
 
@@ -135,7 +138,7 @@ class ReportBuilder:
 
     def build_main(self):
         ctx = self.build_main_ctx(self.test)
-        system_description = self.test.data['system'] or 'UNKNOWN_SYSTEM'
+        system_description = self.test.data['system']['name'] or 'UNKNOWN_SYSTEM'
         filename = 'Протокол аттестации ' + system_description + '.docx'
         path = os.path.join(self.report_path, filename)
         self.build_docx(MAIN_TPL, ctx, path)

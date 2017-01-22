@@ -15,6 +15,20 @@ t.add_temperature_mode(TEST_TEMPERATURE_MODE)
 t.add_humidity_mode(TEST_HUMIDITY_MODE)
 
 t.data['specialist'] = 'Татчин А.В.'
+t.data['tools'] = [
+    'GTH 5050',
+    'Гидрометр ФЫ-2'
+]
+t.data['system'] = {
+    'name': 'НАЗВАНИЕ СИСТЕМЫ',
+    'year_of_production': 'ГОД ВЫПУСКА',
+    'manufacturer': 'ИЗГОТОВИТЕЛЬ',
+    'factory_number': 'ЗАВ. НОМЕР',
+    'description': 'ТЕХНИЧЕСКИЕ ХАРАКТЕРИСТИКИ',
+    'test_program': 'ПРОГРАММА АТТЕСТАЦИИ',
+    'test_method': 'МЕТОДИКА АТТЕСТАЦИИ',
+}
+
 
 t.calculate()
 
