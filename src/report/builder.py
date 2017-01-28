@@ -38,7 +38,7 @@ class ReportBuilder:
                 return ''
 
             md_delta = tmode['processed']['values']['md_delta']
-            res = round(2 - float(md_delta), 1)  # TODO
+            res = round(2 - float(md_delta), tmode['mode']['round_to'])
 
             return ('\u0394{} = {} cтрого меньше |+/- \u0394нор|'
                     ' - \u0394 иy  = 2 – {}  = {}    СООТВЕТСТВУЕТ').format(notation, delta, md_delta, res)
@@ -109,7 +109,7 @@ class ReportBuilder:
 
             max_hum_dev = hmode['processed']['max_allowed_deviation']['humidity'][int(notation) - 1]
             max_hum_dev = abs(max_hum_dev)
-            res = round(max_hum_dev - float(md_delta), 1)  # TODO
+            res = round(max_hum_dev - float(md_delta), hmode['mode']['round_to'])
 
             return ('\u0394\u03C6{} = {} cтрого меньше |+/- \u0394\u03C6нор|'
                     ' - \u0394\u03C6иy  = {} – {}  = {}    СООТВЕТСТВУЕТ')\
@@ -145,12 +145,24 @@ class ReportBuilder:
 
         processed = mode['processed']
 
+        sensors = [
+            processed['dt1_humidity'],
+            processed['dt2_humidity'],
+            processed['kt_temperature'],
+            processed['kt_humidity'],
+            processed['md_temperature'],
+            processed['md_humidity'],
+        ]
+
         return {
             'max_deviation_hum': get_verbose_max_dev_hum(processed['max_allowed_deviation']),
             'max_deviation_temp': processed['max_allowed_deviation']['temperature'],
             'target': processed['target'],
             'page': page,
-            'date': processed['date'],
+            'date': '{}.{}.{}'.format(str(processed['date'])[8:],
+                                      str(processed['date'])[5:7],
+                                      str(processed['date'])[:4]),
+
             'md_delta': processed['md_delta_humidity'],
             'deviation': processed['humidity_deviation'],
 
@@ -161,8 +173,8 @@ class ReportBuilder:
             'res_string_neg': b_res_string(mode, processed['negative_deviation'], '2'),
             'specialist': test.data['specialist'],
 
-            'p': processed
-            # 'rows': get_rows_for_word(mode_vals['sensors'])
+            'p': processed,
+            'rows': get_rows_for_word(sensors)
         }
 
     @staticmethod
@@ -176,8 +188,8 @@ class ReportBuilder:
                 'positive_delta': pos_delta,
                 'negative_delta': '-' + str(neg_delta),
                 'md_delta': res['md_delta'],
-                'positive_total_error': round(pos_delta + res['md_delta'], 1) if pos_delta else '',  # todo
-                'negative_total_error': '-' + str(neg_delta + res['md_delta']) if neg_delta else '',
+                'positive_total_error': round(pos_delta + res['md_delta'], mode['mode']['round_to']) if pos_delta else '',
+                'negative_total_error': '-' + str(round(neg_delta + res['md_delta'], mode['mode']['round_to'])) if neg_delta else '',
                 'verbose_max_deviation': u'\u00B1' + str(res['max_deviation'])
             }
 
@@ -198,8 +210,8 @@ class ReportBuilder:
                 'positive_delta': pos_delta,
                 'negative_delta': '-' + str(neg_delta),
                 'md_delta': res['md_delta_humidity'],
-                'positive_total_error': round(pos_delta + res['md_delta_humidity'], 1) if pos_delta else '',  # todo
-                'negative_total_error': '-' + str(neg_delta + res['md_delta_humidity']) if neg_delta else '',
+                'positive_total_error': round(pos_delta + res['md_delta_humidity'], mode['mode']['round_to']) if pos_delta else '',
+                'negative_total_error': '-' + str(round(neg_delta + res['md_delta_humidity'], mode['mode']['round_to'])) if neg_delta else '',
                 'verbose_max_deviation': get_verbose_max_dev_hum(res['max_allowed_deviation'])
             }
 
