@@ -95,8 +95,74 @@ class ReportBuilder:
 
     @staticmethod
     def build_humidity_mode_ctx(mode, page, test):
-        return {
+        def get_verbose_max_dev_hum(dev):
+            if dev['humidity'][0] + dev['humidity'][1] == 0:
+                return u'\u00B1' + str(dev['humidity'][0])
+            else:
+                return '+' + str(dev['humidity'][0]) + ', ' + str(dev['humidity'][1])
 
+        def b_res_string(hmode, delta, notation):
+            if not float(delta):
+                return ''
+
+            md_delta = hmode['processed']['md_delta_humidity']
+
+            max_hum_dev = hmode['processed']['max_allowed_deviation']['humidity'][int(notation) - 1]
+            max_hum_dev = abs(max_hum_dev)
+            res = round(max_hum_dev - float(md_delta), 1)  # TODO
+
+            return ('\u0394\u03C6{} = {} cтрого меньше |+/- \u0394\u03C6нор|'
+                    ' - \u0394\u03C6иy  = {} – {}  = {}    СООТВЕТСТВУЕТ')\
+                .format(notation, delta, max_hum_dev, md_delta, res)
+
+        def b_delta_string(value, notation):
+            if not float(value):
+                return ''
+            else:
+                return '\u0394\u03C6{} = {} \u00B0C'.format(notation, value)
+
+        def get_rows_for_word(sensors):
+            rows_index_map = {0: 1, 1: 2, 2: 3, 3: 4,
+                              4: 5, 5: 6, 6: 7, 7: 8,
+                              8: 9, 9: 10,
+                              10: 'Средн', 11: 'Т мах', 12: 'T мин',
+                              13: 'А мах', 14: 'А мин'}
+
+            sensor_index_map = {0: 'one', 1: 'two', 2: 'three',
+                                3: 'four', 4: 'five', 5: 'six',
+                                6: 'seven', 7: 'eight', 8: 'nine',
+                                9: 'ten', 10: 'eleven', 11: 'twelve',
+                                12: 'thirteen', 13: 'fourteen',
+                                14: 'fifteen', 15: 'sixteen',
+                                16: 'seventeen', 17: 'eighteen'}
+            rows = []
+            for i in range(len(sensors[0])):
+                r = {'i': rows_index_map[i]}
+                for idx, sensor in enumerate(sensors):
+                    r[sensor_index_map[idx]] = sensor[i]
+                rows.append(r)
+            return rows
+
+        processed = mode['processed']
+
+        return {
+            'max_deviation_hum': get_verbose_max_dev_hum(processed['max_allowed_deviation']),
+            'max_deviation_temp': processed['max_allowed_deviation']['temperature'],
+            'target': processed['target'],
+            'page': page,
+            'date': processed['date'],
+            'md_delta': processed['md_delta_humidity'],
+            'deviation': processed['humidity_deviation'],
+
+            'positive_delta': b_delta_string(processed['positive_deviation'], '1'),
+            'negative_delta': b_delta_string(processed['negative_deviation'], '2'),
+
+            'res_string_pos': b_res_string(mode, processed['positive_deviation'], '1'),
+            'res_string_neg': b_res_string(mode, processed['negative_deviation'], '2'),
+            'specialist': test.data['specialist'],
+
+            'p': processed
+            # 'rows': get_rows_for_word(mode_vals['sensors'])
         }
 
     @staticmethod
