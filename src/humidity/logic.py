@@ -11,7 +11,10 @@ def calculate_mode(mode, log_slice):
     #######################
 
     def mean(arr):
-        return round(python_mean(arr), mode['round_to'])
+        try:
+            return round(python_mean(arr), mode['round_to'])
+        except Exception as e:
+            print(e)
 
     def rounded(number):
         return round(number, mode['round_to'])
@@ -32,7 +35,7 @@ def calculate_mode(mode, log_slice):
 
     # if not special setting use default values
     humidity_max_deviation = \
-        hum_max_dev_settings.get(target_humidity,
+        hum_max_dev_settings.get(str(target_humidity),
                                  hum_max_dev_settings['default'])
 
     max_mean_humidity = max(mean(dt1_humidity),

@@ -48,8 +48,17 @@ def handle_mode(mode):
     slice_length = mode['slice_length']
 
     cursor = 0
+    result = {}
     while True:
-        log_slice = log[cursor: cursor + slice_length]
+        log_slice = pd.DataFrame(log[cursor: cursor + slice_length])
+        try:
+            log_slice.DT1_hum = log_slice.DT1_hum.astype(float)
+            log_slice.DT2_hum = log_slice.DT2_hum.astype(float)
+            log_slice.KT_temp = log_slice.KT_temp.astype(float)
+            log_slice.KT_hum = log_slice.KT_hum.astype(float)
+        except ValueError:
+            return result
+
         result = calculate_mode(mode, log_slice)
 
         if log_slice.shape[0] < 10 or result['result']['summary_mode_result']:

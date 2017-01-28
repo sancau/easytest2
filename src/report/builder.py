@@ -68,7 +68,7 @@ class ReportBuilder:
                 if dev['humidity'][0] + dev['humidity'][1] == 0:
                     return u'\u00B1' + str(dev['humidity'][0])
                 else:
-                    return '+' + str(dev['humidity'][0]) + ', ' + '-' + str(dev['humidity'][1])
+                    return '+' + str(dev['humidity'][0]) + ', ' + str(dev['humidity'][1])
 
             return {
                 'verbose_hum': res['target']['humidity'],

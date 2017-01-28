@@ -1,5 +1,5 @@
 {
-  "date_created": "2017-01-22T21:39:58.490708",
+  "date_created": "2017-01-28T13:28:56.962300",
   "humidity": [
     {
       "mode": {
@@ -59,68 +59,68 @@
         "round_to": 1,
         "slice_length": 10,
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       },
       "processed": {
         "date": "2016-11-07",
         "dt1_humidity": [
-          88.43,
-          88.38,
-          88.25,
-          88.13,
-          88.02,
-          88.07,
-          88.25,
-          88.52,
-          88.47,
-          88.36
+          88.34,
+          88.41,
+          88.41,
+          88.34,
+          88.27,
+          88.34,
+          88.34,
+          88.27,
+          88.32,
+          88.34
         ],
         "dt1_mean_temperature": 88.3,
         "dt2_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "dt2_mean_temperature": 89.2,
         "humidity_deviation": 0.9,
         "kt_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "kt_mean_humidity": 89.2,
         "kt_mean_temperature": 24.8,
         "kt_temperature": [
+          24.78,
           24.79,
+          24.78,
           24.77,
           24.79,
+          24.77,
           24.78,
-          24.76,
           24.78,
           24.78,
-          24.81,
-          24.83,
-          24.79
+          24.78
         ],
         "max_allowed_deviation": {
           "humidity": [
-            3,
+            2,
             -3
           ],
           "temperature": 2
@@ -154,21 +154,21 @@
           25
         ],
         "min_mean_humidity": 88.3,
-        "negative_deviation": 1.7,
-        "positive_deviation": 0.8,
+        "negative_deviation": 9.7,
+        "positive_deviation": 8.8,
         "result": {
           "negative": {
             "equation_result": 2.2,
-            "passed": true
+            "passed": false
           },
           "positive": {
-            "equation_result": 2.2,
-            "passed": true
+            "equation_result": 1.2,
+            "passed": false
           },
-          "summary_mode_result": true
+          "summary_mode_result": false
         },
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       }
@@ -231,68 +231,68 @@
         "round_to": 1,
         "slice_length": 10,
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       },
       "processed": {
         "date": "2016-11-07",
         "dt1_humidity": [
-          88.43,
-          88.38,
-          88.25,
-          88.13,
-          88.02,
-          88.07,
-          88.25,
-          88.52,
-          88.47,
-          88.36
+          88.34,
+          88.41,
+          88.41,
+          88.34,
+          88.27,
+          88.34,
+          88.34,
+          88.27,
+          88.32,
+          88.34
         ],
         "dt1_mean_temperature": 88.3,
         "dt2_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "dt2_mean_temperature": 89.2,
         "humidity_deviation": 0.9,
         "kt_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "kt_mean_humidity": 89.2,
         "kt_mean_temperature": 24.8,
         "kt_temperature": [
+          24.78,
           24.79,
+          24.78,
           24.77,
           24.79,
+          24.77,
           24.78,
-          24.76,
           24.78,
           24.78,
-          24.81,
-          24.83,
-          24.79
+          24.78
         ],
         "max_allowed_deviation": {
           "humidity": [
-            3,
+            2,
             -3
           ],
           "temperature": 2
@@ -326,21 +326,21 @@
           25
         ],
         "min_mean_humidity": 88.3,
-        "negative_deviation": 1.7,
-        "positive_deviation": 0.8,
+        "negative_deviation": 9.7,
+        "positive_deviation": 8.8,
         "result": {
           "negative": {
             "equation_result": 2.2,
-            "passed": true
+            "passed": false
           },
           "positive": {
-            "equation_result": 2.2,
-            "passed": true
+            "equation_result": 1.2,
+            "passed": false
           },
-          "summary_mode_result": true
+          "summary_mode_result": false
         },
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       }
@@ -403,68 +403,68 @@
         "round_to": 1,
         "slice_length": 10,
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       },
       "processed": {
         "date": "2016-11-07",
         "dt1_humidity": [
-          88.43,
-          88.38,
-          88.25,
-          88.13,
-          88.02,
-          88.07,
-          88.25,
-          88.52,
-          88.47,
-          88.36
+          88.34,
+          88.41,
+          88.41,
+          88.34,
+          88.27,
+          88.34,
+          88.34,
+          88.27,
+          88.32,
+          88.34
         ],
         "dt1_mean_temperature": 88.3,
         "dt2_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "dt2_mean_temperature": 89.2,
         "humidity_deviation": 0.9,
         "kt_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "kt_mean_humidity": 89.2,
         "kt_mean_temperature": 24.8,
         "kt_temperature": [
+          24.78,
           24.79,
+          24.78,
           24.77,
           24.79,
+          24.77,
           24.78,
-          24.76,
           24.78,
           24.78,
-          24.81,
-          24.83,
-          24.79
+          24.78
         ],
         "max_allowed_deviation": {
           "humidity": [
-            3,
+            2,
             -3
           ],
           "temperature": 2
@@ -498,21 +498,21 @@
           25
         ],
         "min_mean_humidity": 88.3,
-        "negative_deviation": 1.7,
-        "positive_deviation": 0.8,
+        "negative_deviation": 9.7,
+        "positive_deviation": 8.8,
         "result": {
           "negative": {
             "equation_result": 2.2,
-            "passed": true
+            "passed": false
           },
           "positive": {
-            "equation_result": 2.2,
-            "passed": true
+            "equation_result": 1.2,
+            "passed": false
           },
-          "summary_mode_result": true
+          "summary_mode_result": false
         },
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       }
@@ -575,68 +575,68 @@
         "round_to": 1,
         "slice_length": 10,
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       },
       "processed": {
         "date": "2016-11-07",
         "dt1_humidity": [
-          88.43,
-          88.38,
-          88.25,
-          88.13,
-          88.02,
-          88.07,
-          88.25,
-          88.52,
-          88.47,
-          88.36
+          88.34,
+          88.41,
+          88.41,
+          88.34,
+          88.27,
+          88.34,
+          88.34,
+          88.27,
+          88.32,
+          88.34
         ],
         "dt1_mean_temperature": 88.3,
         "dt2_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "dt2_mean_temperature": 89.2,
         "humidity_deviation": 0.9,
         "kt_humidity": [
-          89.34,
-          89.28,
+          89.21,
+          89.26,
+          89.23,
           89.17,
-          89.03,
-          88.91,
-          88.98,
           89.17,
-          89.41,
-          89.35,
-          89.26
+          89.23,
+          89.19,
+          89.15,
+          89.17,
+          89.19
         ],
         "kt_mean_humidity": 89.2,
         "kt_mean_temperature": 24.8,
         "kt_temperature": [
+          24.78,
           24.79,
+          24.78,
           24.77,
           24.79,
+          24.77,
           24.78,
-          24.76,
           24.78,
           24.78,
-          24.81,
-          24.83,
-          24.79
+          24.78
         ],
         "max_allowed_deviation": {
           "humidity": [
-            3,
+            2,
             -3
           ],
           "temperature": 2
@@ -670,21 +670,21 @@
           25
         ],
         "min_mean_humidity": 88.3,
-        "negative_deviation": 1.7,
-        "positive_deviation": 0.8,
+        "negative_deviation": 9.7,
+        "positive_deviation": 8.8,
         "result": {
           "negative": {
             "equation_result": 2.2,
-            "passed": true
+            "passed": false
           },
           "positive": {
-            "equation_result": 2.2,
-            "passed": true
+            "equation_result": 1.2,
+            "passed": false
           },
-          "summary_mode_result": true
+          "summary_mode_result": false
         },
         "target": {
-          "humidity": 90,
+          "humidity": 98,
           "temperature": 25
         }
       }
