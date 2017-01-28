@@ -32,13 +32,46 @@ class ReportBuilder:
         doc.save(path)
 
     @staticmethod
-    def build_temperature_mode_ctx(mode, page):
-        return {
+    def build_temperature_mode_ctx(mode, page, test):
+        def b_res_string(tmode, delta, notation):
+            if not float(delta):
+                return ''
 
+            md_delta = tmode['processed']['values']['md_delta']
+            res = round(2 - float(md_delta), 1)  # TODO
+
+            return ('\u0394{} = {} cтрого меньше |+/- \u0394нор|'
+                    ' - \u0394 иy  = 2 – {}  = {}    СООТВЕТСТВУЕТ').format(notation, delta, md_delta, res)
+
+        def b_delta_string(value, notation):
+            if not float(value):
+                return ''
+            else:
+                return '\u0394{} = {} \u00B0C'.format(notation, value)
+
+        mode_vals = mode['processed']['values']
+
+        return {
+            'max_deviation': mode_vals['max_deviation'],
+            'max_amplitude': mode_vals['max_amplitude'],
+            'md_delta': mode_vals['md_delta'],
+            'deviation': mode_vals['deviation'],
+            'target': mode_vals['meta']['target'],
+            'date': mode_vals['meta']['date'],
+            'page': page,
+            'positive_delta': b_delta_string(mode_vals['positive_delta'], 'T1'),
+            'negative_delta': b_delta_string(mode_vals['negative_delta'], 'Т2'),
+            'res_string_pos': b_res_string(mode, mode_vals['positive_delta'], 'Т1'),
+            'res_string_neg': b_res_string(mode, mode_vals['negative_delta'], 'Т2'),
+            'specialist': test.data['specialist'],
+            't_max': mode_vals['t_max'],
+            't_min': mode_vals['t_min'],
+            't_md': mode_vals['t_md'],
+            't_cp': mode_vals['t_cp']
         }
 
     @staticmethod
-    def build_humidity_mode_ctx(mode, page):
+    def build_humidity_mode_ctx(mode, page, test):
         return {
 
         }
@@ -54,7 +87,7 @@ class ReportBuilder:
                 'positive_delta': pos_delta,
                 'negative_delta': '-' + str(neg_delta),
                 'md_delta': res['md_delta'],
-                'positive_total_error': pos_delta + res['md_delta'] if pos_delta else '',
+                'positive_total_error': round(pos_delta + res['md_delta'], 1) if pos_delta else '',  # todo
                 'negative_total_error': '-' + str(neg_delta + res['md_delta']) if neg_delta else '',
                 'verbose_max_deviation': u'\u00B1' + str(res['max_deviation'])
             }
@@ -76,7 +109,7 @@ class ReportBuilder:
                 'positive_delta': pos_delta,
                 'negative_delta': '-' + str(neg_delta),
                 'md_delta': res['md_delta_humidity'],
-                'positive_total_error': pos_delta + res['md_delta_humidity'] if pos_delta else '',
+                'positive_total_error': round(pos_delta + res['md_delta_humidity'], 1) if pos_delta else '',  # todo
                 'negative_total_error': '-' + str(neg_delta + res['md_delta_humidity']) if neg_delta else '',
                 'verbose_max_deviation': get_verbose_max_dev_hum(res['max_allowed_deviation'])
             }
@@ -124,21 +157,21 @@ class ReportBuilder:
 
         page = 1
         for mode in tmodes:
-            ctx = self.build_temperature_mode_ctx(mode, page)
+            ctx = self.build_temperature_mode_ctx(mode, page, self.test)
             target = int(mode['mode']['target'])
             prefix = '+' if target > 0 else ''
             filename = prefix + str(target) + '.docx'
             path = os.path.join(self.tmode_path, filename)
-            self.build_docx(HUMIDITY_MODE_TPL, ctx, path)
+            self.build_docx(TEMPERATURE_MODE_TPL, ctx, path)
             page += 1
 
         for mode in hmodes:
-            ctx = self.build_humidity_mode_ctx(mode, page)
+            ctx = self.build_humidity_mode_ctx(mode, page, self.test)
             t_target = str(mode['mode']['target']['temperature'])
             h_target = str(mode['mode']['target']['humidity'])
             filename = '_'.join([t_target, h_target]) + '.docx'
             path = os.path.join(self.hmode_path, filename)
-            self.build_docx(TEMPERATURE_MODE_TPL, ctx, path)
+            self.build_docx(HUMIDITY_MODE_TPL, ctx, path)
             page += 1
 
     def build_main(self):

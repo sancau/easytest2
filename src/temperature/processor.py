@@ -80,9 +80,11 @@ class TemperatureDataProcessor:
                 't_min': t_min,
                 't_md': t_md,
                 't_cp': t_cp,
+                'positive_delta': positive_delta,
                 'negative_delta': negative_delta,
                 'md_delta': md_delta,
                 'deviation': deviation,
+                'max_amplitude': max_amplitude,
                 'max_deviation': max_deviation
             }
 

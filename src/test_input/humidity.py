@@ -19,7 +19,7 @@ TEST_HUMIDITY_MODE = {
         }
     ],
     'target': {
-        'humidity': 98,
+        'humidity': 90,
         'temperature': 25
     },
     'md': {
