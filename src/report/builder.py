@@ -49,6 +49,23 @@ class ReportBuilder:
             else:
                 return '\u0394{} = {} \u00B0C'.format(notation, value)
 
+        def get_rows_for_word(sensors):
+            print(sensors)
+            return [
+                {
+                    'i': 1,
+                    'one': 1, 'two': 2, 'three': 3, 'four': 4,
+                    'five': 5, 'six': 6, 'seven': 7, 'eight': 8,
+                    'cp': 9, 'md': 10
+                },
+                {
+                    'i': 2,
+                    'one': 1, 'two': 2, 'three': 3, 'four': 4,
+                    'five': 5, 'six': 6, 'seven': 7, 'eight': 8,
+                    'cp': 9, 'md': 10
+                }
+            ]
+
         mode_vals = mode['processed']['values']
 
         return {
@@ -67,7 +84,8 @@ class ReportBuilder:
             't_max': mode_vals['t_max'],
             't_min': mode_vals['t_min'],
             't_md': mode_vals['t_md'],
-            't_cp': mode_vals['t_cp']
+            't_cp': mode_vals['t_cp'],
+            'rows': get_rows_for_word(mode_vals['sensors'])
         }
 
     @staticmethod
