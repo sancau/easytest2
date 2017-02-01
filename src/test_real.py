@@ -39,24 +39,24 @@ TEST_HUMIDITY_MODE = {
 
 # user adds modes and log files
 TEST_TEMPERATURE_MODE = {
-    "target": "0",
+    "target": "-30",
     "logs": [
         {
-            "file": "test_data/0_left.txt",
-            "sensors_count": "8",
+            "file": r"C:\Users\ТатчинАВ\Desktop\КТК-3000\факт\-30 ТСП (1 вариант)!!!.txt",
+            "sensors_count": "7",
         },
-        # {
-        #     "file": "test_data/0_right.txt",
-        #     "sensors_count": "8"
-        # }
+        {
+            "file": r"C:\Users\ТатчинАВ\Desktop\КТК-3000\факт\-30 ПТСВ (2 вариант) !!!!!.txt",
+            "sensors_count": "7"
+        }
     ],
     "cp": [
-        "0", "0", "0", "0", "0",
-        "0", "0", "0", "0", "0"
+        "-30", "-30", "-30", "-30", "-30",
+        "-30", "-30", "-30", "-30", "-30"
     ],
     "md": [
-        "0.2", "0", "0", "0", "0",
-        "0", "0.3", "0.2", "0", "0.1"
+        "-30", "-30", "-30", "-30", "-30",
+        "-30", "-30", "-30", "-30", "-30"
     ]
 }
 
@@ -65,12 +65,12 @@ t.add_temperature_mode(TEST_TEMPERATURE_MODE)
 t.add_humidity_mode(TEST_HUMIDITY_MODE)
 
 # user adds report data
-t.data['specialist'] = 'Татчин А.В.'
+t.data['specialist'] = 'Комаров С.В.'
 
 # user adds tools data
 t.data['tools'] = [  # tools data
-    'GTH 5050',
-    'Гидрометр ФЫ-2'
+    'ТЕСТ ПРИБОР 1',
+    'ТЕСТ ПРИБОР 2'
 ]
 
 # user adds system data
@@ -88,7 +88,7 @@ t.data['system'] = {  # system info
 t.calculate()  # invoking test calculation logic
 
 # user can save test to file and reload it from the file
-t.path = 'tests/test_1.json'
+t.path = 'tests/test_real.json'
 t.save()
 print('Calculated and saved to:', t.path)
 
@@ -96,7 +96,7 @@ print('Calculated and saved to:', t.path)
 # TEMPLATE
 
 # user specifies output path for report
-report_path = r'L:\73 отдел\reports'   # ask user every time
+report_path = r'C:\Users\ТатчинАВ\Desktop\reports'  # ask user every time
 
 
 # user can generate report files in MS WORD format

@@ -35,5 +35,10 @@ DEFAULT_TEST = {
 }
 
 MAIN_TPL = r'report/templates/main_tpl.docx'
-TEMPERATURE_MODE_TPL = r'report/templates/tmode_tpl.docx'
+
+def get_temperature_template(mode):
+    sensors_count = len(mode['processed']['values']['sensors'])
+    print(r'report/templates/tmode_tpl_{}.docx'.format(sensors_count))
+    return r'report/templates/tmode_tpl_{}.docx'.format(sensors_count)
+
 HUMIDITY_MODE_TPL = r'report/templates/hmode_tpl.docx'

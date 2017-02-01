@@ -8,7 +8,7 @@ from report.utils import get_verbose_date
 
 from settings import MAIN_TPL
 from settings import HUMIDITY_MODE_TPL
-from settings import TEMPERATURE_MODE_TPL
+from settings import get_temperature_template
 
 
 class ReportBuilder:
@@ -263,7 +263,7 @@ class ReportBuilder:
             prefix = '+' if target > 0 else ''
             filename = prefix + str(target) + '.docx'
             path = os.path.join(self.tmode_path, filename)
-            self.build_docx(TEMPERATURE_MODE_TPL, ctx, path)
+            self.build_docx(get_temperature_template(mode), ctx, path)
             page += 1
 
         for mode in hmodes:
