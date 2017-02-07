@@ -228,9 +228,9 @@ class ReportBuilder:
                 'summary': {
                     'max_tmode': max([mode['mode']['target'] for mode in test.data['temperature']]),
                     'min_tmode': min([mode['mode']['target'] for mode in test.data['temperature']]),
-                    'max_hmode_hum': max([mode['mode']['target']['humidity'] for mode in test.data['humidity']]),
-                    'min_hmode_temp': min([mode['mode']['target']['temperature'] for mode in test.data['humidity']]),
-                    'max_hmode_temp': max([mode['mode']['target']['temperature'] for mode in test.data['humidity']]),
+                    # 'max_hmode_hum': max([mode['mode']['target']['humidity'] for mode in test.data['humidity']]),  # TODO
+                    # 'min_hmode_temp': min([mode['mode']['target']['temperature'] for mode in test.data['humidity']]),  # TODO
+                    # 'max_hmode_temp': max([mode['mode']['target']['temperature'] for mode in test.data['humidity']]),  # TODO
 
                     'tmax_deviation': max([mode['processed']['values']['deviation'] for mode in test.data['temperature']]),
                     'tmax_md_delta': max([mode['processed']['values']['md_delta'] for mode in test.data['temperature']]),
@@ -240,8 +240,8 @@ class ReportBuilder:
                               mode['processed']['values'].get('negative_delta', 0)])
                                                             for mode in test.data['temperature']]),
 
-                    'hmax_deviation': max([mode['processed']['humidity_deviation'] for mode in test.data['humidity']]),
-                    'hmax_md_delta': max([mode['processed']['md_delta_humidity'] for mode in test.data['humidity']])
+                    # 'hmax_deviation': max([mode['processed']['humidity_deviation'] for mode in test.data['humidity']]),  # TODO
+                    # 'hmax_md_delta': max([mode['processed']['md_delta_humidity'] for mode in test.data['humidity']])  # TODO
                 },
                 'tmodes': [btmode(mode) for mode in sorted(test.data['temperature'], key=lambda k: k['mode']['target'])],
 

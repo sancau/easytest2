@@ -62,7 +62,7 @@ TEST_TEMPERATURE_MODE = {
 
 # user adds modes to the test object
 t.add_temperature_mode(TEST_TEMPERATURE_MODE)
-t.add_humidity_mode(TEST_HUMIDITY_MODE)
+# t.add_humidity_mode(TEST_HUMIDITY_MODE)
 
 # user adds report data
 t.data['specialist'] = 'Комаров С.В.'
