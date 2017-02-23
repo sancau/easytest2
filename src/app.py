@@ -10,6 +10,7 @@ from dateutil import parser
 
 from PyQt5 import uic, QtWidgets as QW
 from PyQt5.QtCore import QTranslator
+from PyQt5.QtWidgets import QListWidgetItem
 
 from bl.easytest import Test
 
@@ -19,6 +20,16 @@ class EasyTest(QW.QMainWindow):
         super(EasyTest, self).__init__()
         uic.loadUi('easytest2.ui', self)
         self.test = None
+        self.db_systems = [
+            {
+                '_id': '1',
+                'name': 'System 1'
+            },
+            {
+                '_id': '2',
+                'name': 'System 2'
+            }
+        ]
         self.init_ui()
 
     def init_ui(self):
@@ -26,6 +37,7 @@ class EasyTest(QW.QMainWindow):
         self.tabWidget.close()
         self.init_menu()
         self.bind_test_to_ui()
+        self.init_db_integrated_controls()
         self.show()
 
     def init_menu(self):  # initialize top menu
@@ -44,12 +56,23 @@ class EasyTest(QW.QMainWindow):
         self.test_end_date.dateChanged.connect(lambda x: bind('test_end_date',
                                                               x.toString('yyyy-MM-dd')))
 
+        self.system_select.activated[str].connect(self.on_system_select)
+
+    def init_db_integrated_controls(self):
+        # Systems
+        systems = [i['name'] for i in self.db_systems]
+        items = ['Не выбрана']
+        items.extend(systems)
+        self.system_select.addItems(items)
+
+        # Tools
+        # ...
+
     # MENU ACTION HANDLERS
     ################################################################################################
     def init_new_test_handler(self):
 
         def execute():
-            del self.test
             self.test = Test()
             self.update_test_widget()
             self.tabWidget.show()
@@ -128,13 +151,43 @@ class EasyTest(QW.QMainWindow):
         self.specialist.setText(data['specialist'])
 
         start_date = parser.parse(data['test_start_date']) if data['test_start_date'] else \
-                                  datetime.date.today()
+            datetime.date.today()
 
         end_date = parser.parse(data['test_end_date']) if data['test_end_date'] else \
-                                datetime.date.today()
+            datetime.date.today()
 
         self.test_start_date.setDate(start_date)
         self.test_end_date.setDate(end_date)
+
+        # system select
+        system = data['system']
+        name = system['name'] if system else 'Не выбрана'
+        index = self.system_select.findText(name)
+        if index >= 0:
+            self.system_select.setCurrentIndex(index)
+        self.on_system_select(name)
+
+    def on_system_select(self, name):
+        def get_verbose_key(k):
+            """Returns user friendly repr for a system dict key"""
+            return k.upper()  # not implemented yet
+
+        self.system_info.clear()
+
+        if name == 'Не выбрана':
+            self.test.data['system'] = None
+        else:
+            tmp = [i for i in self.db_systems if i['name'] == name]
+            if len(tmp) != 1:
+                raise LookupError('Zero or more then one system found by name: {}'.format(name))
+            else:
+                system = tmp[0]
+                self.test.data['system'] = system
+
+                # system info code
+                for k, v in system.items():
+                    list_item = QListWidgetItem('{} - {}'.format(get_verbose_key(k), v))
+                    self.system_info.addItem(list_item)
 
     # EVENT OVERLOADING
     ################################################################################################
