@@ -3,7 +3,10 @@
 """
 Easytest 2 UI Application
 """
+import datetime
 import sys
+
+from dateutil import parser
 
 from PyQt5 import uic, QtWidgets as QW
 from PyQt5.QtCore import QTranslator
@@ -36,12 +39,17 @@ class EasyTest(QW.QMainWindow):
         def bind(field, value):
             self.test.data[field] = value
         self.specialist.textEdited.connect(lambda x: bind('specialist', x))
+        self.test_start_date.dateChanged.connect(lambda x: bind('test_start_date',
+                                                                x.toString('yyyy-MM-dd')))
+        self.test_end_date.dateChanged.connect(lambda x: bind('test_end_date',
+                                                              x.toString('yyyy-MM-dd')))
 
     # MENU ACTION HANDLERS
     ################################################################################################
     def init_new_test_handler(self):
 
         def execute():
+            del self.test
             self.test = Test()
             self.update_test_widget()
             self.tabWidget.show()
@@ -118,6 +126,15 @@ class EasyTest(QW.QMainWindow):
     def update_test_widget(self):
         data = self.test.data
         self.specialist.setText(data['specialist'])
+
+        start_date = parser.parse(data['test_start_date']) if data['test_start_date'] else \
+                                  datetime.date.today()
+
+        end_date = parser.parse(data['test_end_date']) if data['test_end_date'] else \
+                                datetime.date.today()
+
+        self.test_start_date.setDate(start_date)
+        self.test_end_date.setDate(end_date)
 
     # EVENT OVERLOADING
     ################################################################################################

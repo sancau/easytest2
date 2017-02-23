@@ -18,7 +18,7 @@ from utils import json_handler
 
 class Test:
     def __init__(self, path=None):
-        self.data = DEFAULT_TEST
+        self.data = DEFAULT_TEST.copy()
         self.path = path
 
         if self.path:
