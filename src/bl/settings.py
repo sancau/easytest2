@@ -6,6 +6,9 @@ from datetime import datetime
 
 DEFAULT_TEST = {
     'date_created': datetime.now(),
+    'test_start_date': None,
+    'test_end_date': None,
+    'next_test_date': None,
     'specialist': None,
     'responsible_specialist': 'Ксенофонтов Б.А.',
     'system': None,
@@ -35,6 +38,7 @@ DEFAULT_TEST = {
 }
 
 MAIN_TPL = r'report/templates/main_tpl.docx'
+
 
 def get_temperature_template(mode):
     sensors_count = len(mode['processed']['values']['sensors'])

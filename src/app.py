@@ -39,7 +39,6 @@ class EasyTest(QW.QMainWindow):
 
     # MENU ACTION HANDLERS
     ################################################################################################
-
     def init_new_test_handler(self):
 
         def execute():
@@ -48,8 +47,7 @@ class EasyTest(QW.QMainWindow):
             self.tabWidget.show()
             self.setWindowTitle('EasyTest 2 - Новая аттестация')
             self.save_as.setEnabled(True)
-
-            # NEW TEST INIT CODE
+            self.save.setEnabled(False)
 
         if self.test:
             reply = QW.QMessageBox.question(self,
@@ -58,7 +56,6 @@ class EasyTest(QW.QMainWindow):
                                             'Все несохранённые изменения будут потеряны!',
                                             QW.QMessageBox.Yes | QW.QMessageBox.No,
                                             QW.QMessageBox.No)
-
             if reply == QW.QMessageBox.Yes:
                 execute()
             else:
@@ -69,7 +66,8 @@ class EasyTest(QW.QMainWindow):
     def open_test_handler(self):
 
         def execute():
-            fname = QW.QFileDialog.getOpenFileName(self, 'Окрыть файл аттестации', '.')
+            fname = QW.QFileDialog.getOpenFileName(self, 'Окрыть файл аттестации', '.',
+                                                   filter='*.et2')
             if not fname[0]:
                 return
             else:
@@ -78,12 +76,8 @@ class EasyTest(QW.QMainWindow):
                     self.update_test_widget()  # push data to UI
                     self.tabWidget.show()
                     self.setWindowTitle('EasyTest 2 - ' + fname[0])
-
-                    # OPEN TEST INIT CODE
-                    print('Opening test from {}'.format(fname[0]))
                     self.save_as.setEnabled(True)
                     self.save.setEnabled(True)
-
                 except Exception as e:
                     print(e)
 
@@ -104,29 +98,29 @@ class EasyTest(QW.QMainWindow):
 
     def save_test_handler(self):
         self.test.save()
-        self.statusBar().showMessage('Аттестация сохранена', 2000)
+        self.statusBar().showMessage('Сохранено', 2000)
 
     def save_test_as_handler(self):
-        fname = QW.QFileDialog.getSaveFileName(self, 'Выберите путь для сохранения', '.')
+        fname = QW.QFileDialog.getSaveFileName(self, 'Выберите путь для сохранения', '.et2',
+                                               filter='*.et2')
         if not fname[0]:
             return
         else:
             try:
-                self.test.save_as(fname[0] + '.json')
+                self.test.save_as(fname[0])
                 self.save.setEnabled(True)
-
+                self.statusBar().showMessage('Сохранено в {}'.format(fname[0]), 3000)
             except Exception as e:
                 print(e)
 
     # HELPERS
     ################################################################################################
-
     def update_test_widget(self):
-        pass
+        data = self.test.data
+        self.specialist.setText(data['specialist'])
 
     # EVENT OVERLOADING
     ################################################################################################
-
     def closeEvent(self, event):
         reply = QW.QMessageBox.question(self,
                                         'Выход из программы',

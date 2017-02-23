@@ -218,6 +218,9 @@ class ReportBuilder:
         return {
             'report': {
                 'date': get_verbose_date(datetime.now()),
+                'test_start_date': 'TODO /builder.py 221',
+                'test_end_date': 'TODO /builder.py 222',
+                'next_test_date': 'TODO /builder.py 223',
                 'specialist': test.data['specialist'],
                 'responsible_specialist': test.data['responsible_specialist'],
                 'total_additions_count': len(test.data['humidity']) + len(test.data['temperature'])
