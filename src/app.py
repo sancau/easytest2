@@ -21,8 +21,13 @@ class EasyTest(QW.QMainWindow):
         super(EasyTest, self).__init__()
         uic.loadUi('easytest2.ui', self)
         self.test = None
+
         with open('inventory_data/systems.json', 'r', encoding='utf-8') as f:
             self.db_systems = json.loads(f.read())
+
+        with open('inventory_data/tools.json', 'r', encoding='utf-8') as f:
+            self.db_tools = json.loads(f.read())
+
         self.init_ui()
 
     def init_ui(self):
@@ -50,6 +55,8 @@ class EasyTest(QW.QMainWindow):
                                                               x.toString('yyyy-MM-dd')))
 
         self.system_select.activated[str].connect(self.on_system_select)
+        self.tools_available.itemDoubleClicked.connect(self.on_available_tool_doubleclick)
+        self.tools_selected.itemDoubleClicked.connect(self.on_selected_tool_doubleclick)
 
     def init_db_integrated_controls(self):
         # Systems
@@ -59,7 +66,9 @@ class EasyTest(QW.QMainWindow):
         self.system_select.addItems(items)
 
         # Tools
-        # ...
+        for tool in sorted(self.db_tools, key=lambda tool: (tool['name'])):
+            list_item = QListWidgetItem(tool['name'])
+            self.tools_available.addItem(list_item)
 
     # MENU ACTION HANDLERS
     ################################################################################################
@@ -160,6 +169,12 @@ class EasyTest(QW.QMainWindow):
             self.system_select.setCurrentIndex(index)
         self.on_system_select(name)
 
+        # selected tools  TODO maybe there's a need for a check if a tool from saved test is in db
+        self.tools_selected.clear()
+        for tool in sorted(data['tools'], key=lambda t: (t['name'])):
+            list_item = QListWidgetItem(tool['name'])
+            self.tools_selected.addItem(list_item)
+
     def on_system_select(self, name):
         def get_verbose_key(k):
             """Returns user friendly repr for a system dict key"""
@@ -181,6 +196,33 @@ class EasyTest(QW.QMainWindow):
                 for k, v in system.items():
                     list_item = QListWidgetItem('{} - {}'.format(get_verbose_key(k), v))
                     self.system_info.addItem(list_item)
+
+    def on_available_tool_doubleclick(self, item):
+        selected_tools = [self.tools_selected.item(i) for i in range(self.tools_selected.count())]
+
+        selected_names = [i.text() for i in selected_tools]
+
+        clicked_name = item.text()
+
+        if clicked_name not in selected_names:
+            list_item = QListWidgetItem(clicked_name)
+            self.tools_selected.addItem(list_item)
+
+        in_test = [t['name'] for t in self.test.data['tools']]
+        if clicked_name in in_test:
+            return
+        tool = [i for i in self.db_tools if i['name'] == clicked_name]
+        if not tool:
+            raise LookupError('Could not find tool in db')
+        self.test.data['tools'].append(tool[0])
+
+    def on_selected_tool_doubleclick(self, item):
+        self.tools_selected.takeItem(self.tools_selected.row(item))
+        clicked_name = item.text()
+        tool = [i for i in self.test.data['tools'] if i['name'] == clicked_name]
+        if not tool:
+            return
+        self.test.data['tools'].remove(tool[0])
 
     # EVENT OVERLOADING
     ################################################################################################
