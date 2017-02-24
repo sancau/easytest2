@@ -16,11 +16,34 @@ from PyQt5.QtWidgets import QListWidgetItem
 from bl.easytest import Test
 
 
+class TMode(QW.QWidget):
+    def __init__(self, parent):
+        super(TMode, self).__init__()
+        uic.loadUi('tmode.ui', self)
+        self.parent = parent
+        self.save.clicked.connect(self.save_tmode)
+
+    def save_tmode(self):
+        pass
+
+
+class HMode(QW.QWidget):
+    def __init__(self, parent):
+        super(HMode, self).__init__()
+        uic.loadUi('hmode.ui', self)
+        self.parent = parent
+        self.save.clicked.connect(self.save_hmode)
+
+    def save_hmode(self):
+        pass
+
+
 class EasyTest(QW.QMainWindow):
     def __init__(self):
         super(EasyTest, self).__init__()
         uic.loadUi('easytest2.ui', self)
         self.test = None
+        self.children = []
 
         with open('inventory_data/systems.json', 'r', encoding='utf-8') as f:
             self.db_systems = json.loads(f.read())
@@ -57,6 +80,10 @@ class EasyTest(QW.QMainWindow):
         self.system_select.activated[str].connect(self.on_system_select)
         self.tools_available.itemDoubleClicked.connect(self.on_available_tool_doubleclick)
         self.tools_selected.itemDoubleClicked.connect(self.on_selected_tool_doubleclick)
+
+        # modes
+        self.btn_add_tmode.clicked.connect(self.on_add_tmode_click)
+        self.btn_add_hmode.clicked.connect(self.on_add_hmode_click)
 
     def init_db_integrated_controls(self):
         # Systems
@@ -224,6 +251,16 @@ class EasyTest(QW.QMainWindow):
             return
         self.test.data['tools'].remove(tool[0])
 
+    def on_add_tmode_click(self):
+        tmode_window = TMode(parent=self)
+        self.children.append(tmode_window)
+        tmode_window.show()
+
+    def on_add_hmode_click(self):
+        hmode_window = HMode(parent=self)
+        self.children.append(hmode_window)
+        hmode_window.show()
+
     # EVENT OVERLOADING
     ################################################################################################
     def closeEvent(self, event):
@@ -235,7 +272,10 @@ class EasyTest(QW.QMainWindow):
                                         QW.QMessageBox.No)
 
         if reply == QW.QMessageBox.Yes:
+            for w in self.children:
+                w.close()  # close all the children
             event.accept()
+
         else:
             event.ignore()
 
