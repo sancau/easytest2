@@ -4,6 +4,7 @@
 Easytest 2 UI Application
 """
 import datetime
+import json
 import sys
 
 from dateutil import parser
@@ -20,16 +21,8 @@ class EasyTest(QW.QMainWindow):
         super(EasyTest, self).__init__()
         uic.loadUi('easytest2.ui', self)
         self.test = None
-        self.db_systems = [
-            {
-                '_id': '1',
-                'name': 'System 1'
-            },
-            {
-                '_id': '2',
-                'name': 'System 2'
-            }
-        ]
+        with open('inventory_data/systems.json', 'r', encoding='utf-8') as f:
+            self.db_systems = json.loads(f.read())
         self.init_ui()
 
     def init_ui(self):
