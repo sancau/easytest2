@@ -161,7 +161,7 @@ class HMode(QW.QWidget):
                                                              log['desc']))
             self.logs.addItem(list_item)
 
-        self.save.clicked.connect(self.save_tmode)
+        self.save.clicked.connect(self.save_hmode)
         self.remove.clicked.connect(self.remove_mode)
 
         self.target_temp.textEdited.connect(self.on_target_temp_edit)
@@ -192,7 +192,7 @@ class HMode(QW.QWidget):
         self.md_hum.setText(default_md_hum)
         self.mode['md']['humidity'] = [v for v in default_md_hum.split(' | ')]
 
-    def save_tmode(self):
+    def save_hmode(self):
         try:
             if self.is_edit:
                 self.parent.update_test_widget()
@@ -200,10 +200,10 @@ class HMode(QW.QWidget):
                 self.parent.test.add_humidity_mode(self.mode)
                 list_item = QListWidgetItem(
                     'Режим {}/{}. Файлов: {}'.format(self.mode['target']['temperature'],
-                                                  self.mode['target']['humidity'],
-                                                  len(self.mode['logs'])))
+                                                     self.mode['target']['humidity'],
+                                                     len(self.mode['logs'])))
 
-                self.parent.tmodes_list.addItem(list_item)
+                self.parent.hmodes_list.addItem(list_item)
             self.close()
         except Exception as e:
             print(e)
@@ -309,6 +309,7 @@ class EasyTest(QW.QMainWindow):
         self.btn_add_tmode.clicked.connect(self.on_add_tmode_click)
         self.btn_add_hmode.clicked.connect(self.on_add_hmode_click)
         self.tmodes_list.itemDoubleClicked.connect(self.on_tmode_doubleclick)
+        self.hmodes_list.itemDoubleClicked.connect(self.on_hmode_doubleclick)
 
     def init_db_integrated_controls(self):
         # Systems
@@ -435,6 +436,16 @@ class EasyTest(QW.QMainWindow):
                                                                       len(mode['logs'])))
             self.tmodes_list.addItem(list_item)
 
+        # hmodes
+        self.hmodes_list.clear()
+        for hmode in sorted(data['humidity'], key=lambda m: (m['mode']['target']['temperature'])):
+            mode = hmode['mode']
+            list_item = QListWidgetItem(
+                'Режим {}/{}. Файлов: {}'.format(mode['target']['temperature'],
+                                                 mode['target']['humidity'],
+                                                 len(mode['logs'])))
+            self.hmodes_list.addItem(list_item)
+
     def on_system_select(self, name):
         def get_verbose_key(k):
             """Returns user friendly repr for a system dict key"""
@@ -504,6 +515,20 @@ class EasyTest(QW.QMainWindow):
         tmode_window = TMode(parent=self, mode=mode)
         self.children.append(tmode_window)
         tmode_window.show()
+
+    def on_hmode_doubleclick(self, item):
+        text = item.text()
+        text = text.split('.')[0]
+        text = text.split(' ')[1]
+        target_temp, target_hum = text.split('/')
+        mode = [i for i in self.test.data['humidity'] if \
+                i['mode']['target']['temperature'] == target_temp and \
+                i['mode']['target']['humidity'] == target_hum]
+        if mode:
+            mode = mode[0]['mode']
+        hmode_window = HMode(parent=self, mode=mode)
+        self.children.append(hmode_window)
+        hmode_window.show()
 
     # EVENT OVERLOADING
     ################################################################################################
