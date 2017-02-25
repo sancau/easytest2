@@ -75,12 +75,6 @@ class Test:
         else:
             print('Validation errors:', errors)
 
-    def update_temperature_mode(self, mode):
-        raise NotImplementedError
-
-    def remove_temperature_mode(self, mode):
-        raise NotImplementedError
-
     def add_humidity_mode(self, mode):  # adds a humidity mode to the test
         errors = validate_humidity_mode(mode)
         if not errors:
@@ -88,9 +82,3 @@ class Test:
             self.data['humidity'].append({'mode': mode})
         else:
             print('Validation errors:', errors)
-
-    def update_humidity_mode(self, mode):
-        raise NotImplementedError
-
-    def remove_humidity_mode(self, mode):
-        raise NotImplementedError

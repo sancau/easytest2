@@ -27,12 +27,24 @@ class TMode(QW.QWidget):
             'cp': [],
             'md': []
         }
+        if not self.is_edit:  # if it's new mode hide the delete button
+            self.remove.hide()
         self.parent = parent
         self.setAcceptDrops(True)
         self.bind_ui()
 
     def bind_ui(self):
+        self.target.setText(self.mode['target'])
+        self.cp_values.setText(' | '.join(self.mode['cp']))
+        self.md_values.setText(' | '.join(self.mode['md']))
+
+        for log in self.mode['logs']:
+            list_item = QListWidgetItem('{} (датчиков: {})'.format(log['file'],
+                                                                   log['sensors_count']))
+            self.logs.addItem(list_item)
+
         self.save.clicked.connect(self.save_tmode)
+        self.remove.clicked.connect(self.remove_mode)
         self.target.textEdited.connect(self.on_target_edit)
         self.cp_values.textEdited.connect(self.on_cp_edit)
         self.md_values.textEdited.connect(self.on_md_edit)
@@ -53,10 +65,33 @@ class TMode(QW.QWidget):
     def save_tmode(self):
         try:
             if self.is_edit:
-                self.parent.test.update_temperature_mode(self.mode)
+                self.parent.update_test_widget()
             else:
                 self.parent.test.add_temperature_mode(self.mode)
+                list_item = QListWidgetItem('Режим {}. Файлов: {}'.format(self.mode['target'],
+                                                                          len(self.mode['logs'])))
+                self.parent.tmodes_list.addItem(list_item)
             self.close()
+        except Exception as e:
+            print(e)
+
+    def remove_mode(self):
+        try:
+            reply = QW.QMessageBox.question(self,
+                                            'Подтвердите дейтсвие',
+                                            'Вы действительно удалить данный режим? ',
+                                            QW.QMessageBox.Yes | QW.QMessageBox.No,
+                                            QW.QMessageBox.No)
+            if reply == QW.QMessageBox.Yes:
+                to_remove = [i for i in self.parent.test.data['temperature'] \
+                             if i['mode'] == self.mode]
+                if to_remove:
+                    to_remove = to_remove[0]
+                self.parent.test.data['temperature'].remove(to_remove)
+                self.parent.update_test_widget()
+                self.close()
+            else:
+                return
         except Exception as e:
             print(e)
 
@@ -150,6 +185,7 @@ class EasyTest(QW.QMainWindow):
         # modes
         self.btn_add_tmode.clicked.connect(self.on_add_tmode_click)
         self.btn_add_hmode.clicked.connect(self.on_add_hmode_click)
+        self.tmodes_list.itemDoubleClicked.connect(self.on_tmode_doubleclick)
 
     def init_db_integrated_controls(self):
         # Systems
@@ -268,6 +304,14 @@ class EasyTest(QW.QMainWindow):
             list_item = QListWidgetItem(tool['name'])
             self.tools_selected.addItem(list_item)
 
+        # tmodes
+        self.tmodes_list.clear()
+        for tmode in sorted(data['temperature'], key=lambda m: (m['mode']['target'])):
+            mode = tmode['mode']
+            list_item = QListWidgetItem('Режим {}. Файлов: {}'.format(mode['target'],
+                                                                      len(mode['logs'])))
+            self.tmodes_list.addItem(list_item)
+
     def on_system_select(self, name):
         def get_verbose_key(k):
             """Returns user friendly repr for a system dict key"""
@@ -326,6 +370,17 @@ class EasyTest(QW.QMainWindow):
         hmode_window = HMode(parent=self)
         self.children.append(hmode_window)
         hmode_window.show()
+
+    def on_tmode_doubleclick(self, item):
+        text = item.text()
+        target = text.split('.')[0]
+        target = target.split(' ')[1]
+        mode = [i for i in self.test.data['temperature'] if i['mode']['target'] == target]
+        if mode:
+            mode = mode[0]['mode']
+        tmode_window = TMode(parent=self, mode=mode)
+        self.children.append(tmode_window)
+        tmode_window.show()
 
     # EVENT OVERLOADING
     ################################################################################################
