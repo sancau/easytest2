@@ -128,14 +128,137 @@ class TMode(QW.QWidget):
 
 
 class HMode(QW.QWidget):
-    def __init__(self, parent):
+    def __init__(self, mode=None, parent=None):
         super(HMode, self).__init__()
         uic.loadUi('hmode.ui', self)
+        self.is_edit = bool(mode)
+        self.mode = mode if mode else {
+            'logs': [],
+            'target': {
+                'humidity': None,
+                'temperature': None
+            },
+            'md': {
+                'humidity': [],
+                'temperature': []
+            }
+        }
+        if not self.is_edit:  # if it's new mode hide the delete button
+            self.remove.hide()
         self.parent = parent
-        self.save.clicked.connect(self.save_hmode)
+        self.setAcceptDrops(True)
+        self.bind_ui()
 
-    def save_hmode(self):
-        pass
+    def bind_ui(self):
+        self.target_temp.setText(self.mode['target']['temperature'])
+        self.target_hum.setText(self.mode['target']['humidity'])
+
+        self.md_hum.setText(' | '.join(self.mode['md']['humidity']))
+        self.md_temp.setText(' | '.join(self.mode['md']['temperature']))
+
+        for log in self.mode['logs']:
+            list_item = QListWidgetItem('{} (для {})'.format(log['file'],
+                                                             log['desc']))
+            self.logs.addItem(list_item)
+
+        self.save.clicked.connect(self.save_tmode)
+        self.remove.clicked.connect(self.remove_mode)
+
+        self.target_temp.textEdited.connect(self.on_target_temp_edit)
+        self.target_hum.textEdited.connect(self.on_target_hum_edit)
+
+        self.md_hum.textEdited.connect(self.on_md_hum_edit)
+        self.md_temp.textEdited.connect(self.on_md_temp_edit)
+
+        self.logs.itemDoubleClicked.connect(self.on_logs_doubleclick)
+
+    def on_target_temp_edit(self, value):
+        self.mode['target']['temperature'] = value
+        if value:
+            default_md_temp = ' | '.join([value + '.0' for i in range(10)])
+        else:
+            default_md_temp = None
+
+        self.md_temp.setText(default_md_temp)
+        self.mode['md']['temperature'] = [v for v in default_md_temp.split(' | ')]
+
+    def on_target_hum_edit(self, value):
+        self.mode['target']['humidity'] = value
+        if value:
+            default_md_hum = ' | '.join([value + '.0' for i in range(10)])
+        else:
+            default_md_hum = None
+
+        self.md_hum.setText(default_md_hum)
+        self.mode['md']['humidity'] = [v for v in default_md_hum.split(' | ')]
+
+    def save_tmode(self):
+        try:
+            if self.is_edit:
+                self.parent.update_test_widget()
+            else:
+                self.parent.test.add_humidity_mode(self.mode)
+                list_item = QListWidgetItem(
+                    'Режим {}/{}. Файлов: {}'.format(self.mode['target']['temperature'],
+                                                  self.mode['target']['humidity'],
+                                                  len(self.mode['logs'])))
+
+                self.parent.tmodes_list.addItem(list_item)
+            self.close()
+        except Exception as e:
+            print(e)
+
+    def remove_mode(self):
+        try:
+            reply = QW.QMessageBox.question(self,
+                                            'Подтвердите дейтсвие',
+                                            'Вы действительно удалить данный режим? ',
+                                            QW.QMessageBox.Yes | QW.QMessageBox.No,
+                                            QW.QMessageBox.No)
+            if reply == QW.QMessageBox.Yes:
+                to_remove = [i for i in self.parent.test.data['humidity'] \
+                             if i['mode'] == self.mode]
+                if to_remove:
+                    to_remove = to_remove[0]
+                self.parent.test.data['humidity'].remove(to_remove)
+                self.parent.update_test_widget()
+                self.close()
+            else:
+                return
+        except Exception as e:
+            print(e)
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [str(u.toLocalFile()) for u in event.mimeData().urls()]
+        items = ['DT1', 'DT2', 'KT']
+        for f in files:
+            item, ok = QW.QInputDialog.getItem(self,
+                                               'Параметры файла лога',
+                                               'Использовать как (файл {}):'.format(f), items)
+            if ok and item:
+                list_item = QListWidgetItem('{} ({})'.format(f, item))
+                self.logs.addItem(list_item)
+                self.mode['logs'].append({'file': f, 'desc': str(item)})
+
+    def on_md_hum_edit(self, val):
+        self.mode['md']['humidity'] = [v for v in val.split(' | ')]
+
+    def on_md_temp_edit(self, val):
+        self.mode['md']['temperature'] = [v for v in val.split(' | ')]
+
+    def on_logs_doubleclick(self, item):
+        self.logs.takeItem(self.logs.row(item))
+        clicked_file = item.text().split(' ')[0]
+        log = [i for i in self.mode['logs'] if i['file'] == clicked_file]
+        if not log:
+            return
+        self.mode['logs'].remove(log[0])
 
 
 class EasyTest(QW.QMainWindow):
