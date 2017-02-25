@@ -4,8 +4,7 @@
     <list default="true" id="fdd96c2e-4c66-40b6-98e4-4c0ef8803574" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.py" afterPath="$PROJECT_DIR$/src/app.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/easytest2.ui" afterPath="$PROJECT_DIR$/src/easytest2.ui" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/tmode.ui" afterPath="$PROJECT_DIR$/src/tmode.ui" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/bl/easytest.py" afterPath="$PROJECT_DIR$/src/bl/easytest.py" />
     </list>
     <ignored path="easytest2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -30,14 +29,16 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+            <state relative-caret-position="501">
+              <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
               <folding>
                 <element signature="e#59#74#0" expanded="true" />
-                <element signature="e#12614#12845#0" expanded="false" />
+                <element signature="e#2995#3217#0" expanded="false" />
+                <element signature="e#3256#12852#0" expanded="false" />
+                <element signature="e#12885#13116#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -48,6 +49,65 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="198">
               <caret line="11" column="6" lean-forward="true" selection-start-line="2" selection-start-column="4" selection-end-line="11" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.et2" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test.et2">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1854">
+              <caret line="136" column="1" lean-forward="false" selection-start-line="136" selection-start-column="1" selection-end-line="136" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_1.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bl/tests/test_1.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!block;n#settings#0;n#!!top" expanded="false" />
+                <element signature="n#!!block;n#system#0;n#!!top" expanded="false" />
+                <element signature="e#1704#8234#0" expanded="false" />
+                <element signature="e#8246#15756#0" expanded="false" />
+                <element signature="e#15762#23286#0" expanded="false" />
+                <element signature="e#23292#30828#0" expanded="false" />
+                <element signature="e#30834#38364#0" expanded="false" />
+                <element signature="e#38402#38586#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_real.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bl/tests/test_real.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1313">
+              <caret line="595" column="1" lean-forward="false" selection-start-line="595" selection-start-column="1" selection-end-line="595" selection-end-column="1" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bl/test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="171" column="32" lean-forward="false" selection-start-line="171" selection-start-column="27" selection-end-line="171" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="easytest.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/bl/easytest.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="593">
+              <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -100,9 +160,9 @@
         <option value="$PROJECT_DIR$/src/tmp.py" />
         <option value="$PROJECT_DIR$/src/bl/report/builder.py" />
         <option value="$PROJECT_DIR$/src/bl/settings.py" />
-        <option value="$PROJECT_DIR$/src/bl/easytest.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/inventory_data/tools.json" />
+        <option value="$PROJECT_DIR$/src/bl/easytest.py" />
         <option value="$PROJECT_DIR$/src/test.et2" />
         <option value="$PROJECT_DIR$/src/app.py" />
       </list>
@@ -115,9 +175,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="5" />
-    <option name="width" value="960" />
-    <option name="height" value="1040" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -159,6 +220,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="easytest2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="easytest2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="bl" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -647,7 +726,14 @@
       <option name="project" value="LOCAL" />
       <updated>1487968703973</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="iter: implemented tmode dialog bl logic and presentation logic&#10;&#10;next: implement tmode save method">
+      <created>1488027154323</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1488027154323</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -665,19 +751,19 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="5" y="0" width="960" height="1040" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1917373" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09427083" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32900432" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24567099" sideWeight="0.5063966" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18113612" sideWeight="0.4936034" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18018967" sideWeight="0.4936034" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23794213" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23393045" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32929516" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -722,7 +808,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="feat: reorganize settings structure" />
     <MESSAGE value="feat: added humidity mode validator / humidity mode TEST mode" />
     <MESSAGE value="feat: testing initial humidity mode handling / flow" />
     <MESSAGE value="iteration: done with humidity mode processing logic. &#10;next: report template dev" />
@@ -747,7 +832,8 @@
     <MESSAGE value="iter: added system data and tools data as json, integrated tools data and systems data" />
     <MESSAGE value="iter: implemented logic for system tab and tools tab (add / remove / test sync / etc)&#10;&#10;next: new windows popup logic (for modes and settings)" />
     <MESSAGE value="iter: added child opening logic for tmode and hmode. implemented basic template for tmode and hmode widgets" />
-    <option name="LAST_COMMIT_MESSAGE" value="iter: added child opening logic for tmode and hmode. implemented basic template for tmode and hmode widgets" />
+    <MESSAGE value="iter: implemented tmode dialog bl logic and presentation logic&#10;&#10;next: implement tmode save method" />
+    <option name="LAST_COMMIT_MESSAGE" value="iter: implemented tmode dialog bl logic and presentation logic&#10;&#10;next: implement tmode save method" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -811,13 +897,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/3.et2" />
-    <entry file="file://$PROJECT_DIR$/src/bl/tests/test_real.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1168">
-          <caret line="595" column="1" lean-forward="false" selection-start-line="595" selection-start-column="1" selection-end-line="595" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bl/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -867,28 +946,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/bl/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bl/tests/test_1.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/bl/easytest.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="900">
-          <caret line="59" column="13" lean-forward="true" selection-start-line="59" selection-start-column="13" selection-end-line="59" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/bl/temperature/interface.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="583">
@@ -909,14 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test.et2">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="702">
-          <caret line="241" column="1" lean-forward="false" selection-start-line="241" selection-start-column="1" selection-end-line="241" selection-end-column="1" />
           <folding />
         </state>
       </provider>
@@ -977,14 +1026,65 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/bl/tests/test_1.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!block;n#settings#0;n#!!top" expanded="false" />
+            <element signature="n#!!block;n#system#0;n#!!top" expanded="false" />
+            <element signature="e#1704#8234#0" expanded="false" />
+            <element signature="e#8246#15756#0" expanded="false" />
+            <element signature="e#15762#23286#0" expanded="false" />
+            <element signature="e#23292#30828#0" expanded="false" />
+            <element signature="e#30834#38364#0" expanded="false" />
+            <element signature="e#38402#38586#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bl/tests/test_real.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1313">
+          <caret line="595" column="1" lean-forward="false" selection-start-line="595" selection-start-column="1" selection-end-line="595" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bl/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="171" column="32" lean-forward="false" selection-start-line="171" selection-start-column="27" selection-end-line="171" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bl/easytest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="593">
+          <caret line="96" column="0" lean-forward="true" selection-start-line="96" selection-start-column="0" selection-end-line="96" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="31" column="0" lean-forward="true" selection-start-line="31" selection-start-column="0" selection-end-line="31" selection-end-column="0" />
+        <state relative-caret-position="501">
+          <caret line="61" column="0" lean-forward="true" selection-start-line="61" selection-start-column="0" selection-end-line="61" selection-end-column="0" />
           <folding>
             <element signature="e#59#74#0" expanded="true" />
-            <element signature="e#12614#12845#0" expanded="false" />
+            <element signature="e#2995#3217#0" expanded="false" />
+            <element signature="e#3256#12852#0" expanded="false" />
+            <element signature="e#12885#13116#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test.et2">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1854">
+          <caret line="136" column="1" lean-forward="false" selection-start-line="136" selection-start-column="1" selection-end-line="136" selection-end-column="1" />
+          <folding />
         </state>
       </provider>
     </entry>

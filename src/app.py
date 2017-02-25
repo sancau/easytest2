@@ -20,6 +20,7 @@ class TMode(QW.QWidget):
     def __init__(self, mode=None, parent=None):
         super(TMode, self).__init__()
         uic.loadUi('tmode.ui', self)
+        self.is_edit = bool(mode)
         self.mode = mode if mode else {
             'logs': [],
             'target': None,
@@ -50,7 +51,14 @@ class TMode(QW.QWidget):
         self.mode['md'] = [v for v in default_cp_and_md.split(' | ')]
 
     def save_tmode(self):
-        print(self.mode)  # TODO
+        try:
+            if self.is_edit:
+                self.parent.test.update_temperature_mode(self.mode)
+            else:
+                self.parent.test.add_temperature_mode(self.mode)
+            self.close()
+        except Exception as e:
+            print(e)
 
     def dragEnterEvent(self, event):
         if event.mimeData().hasUrls():
