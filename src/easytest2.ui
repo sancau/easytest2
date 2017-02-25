@@ -33,7 +33,7 @@
        <bool>true</bool>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
@@ -91,7 +91,11 @@
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QComboBox" name="system_select"/>
+           <widget class="QComboBox" name="system_select">
+            <property name="maxVisibleItems">
+             <number>30</number>
+            </property>
+           </widget>
           </item>
          </layout>
         </item>

@@ -17,14 +17,71 @@ from bl.easytest import Test
 
 
 class TMode(QW.QWidget):
-    def __init__(self, parent):
+    def __init__(self, mode=None, parent=None):
         super(TMode, self).__init__()
         uic.loadUi('tmode.ui', self)
+        self.mode = mode if mode else {
+            'logs': [],
+            'target': None,
+            'cp': [],
+            'md': []
+        }
         self.parent = parent
+        self.setAcceptDrops(True)
+        self.bind_ui()
+
+    def bind_ui(self):
         self.save.clicked.connect(self.save_tmode)
+        self.target.textEdited.connect(self.on_target_edit)
+        self.cp_values.textEdited.connect(self.on_cp_edit)
+        self.md_values.textEdited.connect(self.on_md_edit)
+        self.logs.itemDoubleClicked.connect(self.on_logs_doubleclick)
+
+    def on_target_edit(self, value):
+        self.mode['target'] = value
+        if value:
+            default_cp_and_md = ' | '.join([value + '.0' for i in range(10)])
+        else:
+            default_cp_and_md = None
+
+        self.cp_values.setText(default_cp_and_md)
+        self.md_values.setText(default_cp_and_md)
+        self.mode['cp'] = [v for v in default_cp_and_md.split(' | ')]
+        self.mode['md'] = [v for v in default_cp_and_md.split(' | ')]
 
     def save_tmode(self):
-        pass
+        print(self.mode)  # TODO
+
+    def dragEnterEvent(self, event):
+        if event.mimeData().hasUrls():
+            event.accept()
+        else:
+            event.ignore()
+
+    def dropEvent(self, event):
+        files = [str(u.toLocalFile()) for u in event.mimeData().urls()]
+        for f in files:
+            num, ok = QW.QInputDialog.getInt(self,
+                                             'Параметры файла лога',
+                                             'Количество датчиков (файл {}):'.format(f))
+            if ok and num > 0:
+                list_item = QListWidgetItem('{} (датчиков: {})'.format(f, num))
+                self.logs.addItem(list_item)
+                self.mode['logs'].append({'file': f, 'sensors_count': str(num)})
+
+    def on_cp_edit(self, val):
+        self.mode['cp'] = [v for v in val.split(' | ')]
+
+    def on_md_edit(self, val):
+        self.mode['md'] = [v for v in val.split(' | ')]
+
+    def on_logs_doubleclick(self, item):
+        self.logs.takeItem(self.logs.row(item))
+        clicked_file = item.text().split(' ')[0]
+        log = [i for i in self.mode['logs'] if i['file'] == clicked_file]
+        if not log:
+            return
+        self.mode['logs'].remove(log[0])
 
 
 class HMode(QW.QWidget):
@@ -46,7 +103,8 @@ class EasyTest(QW.QMainWindow):
         self.children = []
 
         with open('inventory_data/systems.json', 'r', encoding='utf-8') as f:
-            self.db_systems = json.loads(f.read())
+            db_systems = [s for s in json.loads(f.read()) if s['purpose'] == 'climatic']
+            self.db_systems = sorted(db_systems, key=lambda s: (s['name']))
 
         with open('inventory_data/tools.json', 'r', encoding='utf-8') as f:
             self.db_tools = json.loads(f.read())
