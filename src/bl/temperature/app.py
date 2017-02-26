@@ -5,8 +5,8 @@ import json
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-from temperature.required_input_info import REQUIRED_INPUT_INFO
-from temperature.temperature_mode_handler import TemperatureModeHandler
+from bl.temperature.required_input_info import REQUIRED_INPUT_INFO
+from bl.temperature.temperature_mode_handler import TemperatureModeHandler
 
 app = Flask(__name__)
 CORS(app)

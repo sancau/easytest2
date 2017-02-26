@@ -2,8 +2,8 @@
 
 from collections import namedtuple
 
-from easytest import Test
-from report.builder import ReportBuilder
+from bl.easytest import Test
+from bl.report.builder import ReportBuilder
 
 LogDescriptions = namedtuple('LogDescriptions', ['DT1', 'DT2', 'KT'])
 DESC = LogDescriptions('DT1', 'DT2', 'KT')

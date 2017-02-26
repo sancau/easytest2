@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from humidity.logic import calculate_mode
+from bl.humidity.logic import calculate_mode
 
 
 def parse_xlsx(data):

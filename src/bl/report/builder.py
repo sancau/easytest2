@@ -4,11 +4,11 @@ from datetime import datetime
 
 from docxtpl import DocxTemplate
 
-from report.utils import get_verbose_date
+from bl.report.utils import get_verbose_date
 
-from settings import MAIN_TPL
-from settings import HUMIDITY_MODE_TPL
-from settings import get_temperature_template
+from bl.settings import MAIN_TPL
+from bl.settings import HUMIDITY_MODE_TPL
+from bl.settings import get_temperature_template
 
 
 class ReportBuilder:

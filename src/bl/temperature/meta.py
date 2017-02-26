@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from temperature.log import Log
+from bl.temperature.log import Log
 
 
 class Meta:

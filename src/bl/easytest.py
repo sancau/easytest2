@@ -7,15 +7,15 @@ import copy
 
 import json
 
-from report.builder import ReportBuilder
-from temperature.interface import TemperatureModeHandler
-from humidity.interface import handle_mode
+from bl.report.builder import ReportBuilder
+from bl.temperature.interface import TemperatureModeHandler
+from bl.humidity.interface import handle_mode
 
-from settings import DEFAULT_TEST
-from validators import validate_temperature_mode
-from validators import validate_humidity_mode
-from validators import validate_test_settings
-from utils import json_handler
+from bl.settings import DEFAULT_TEST
+from bl.validators import validate_temperature_mode
+from bl.validators import validate_humidity_mode
+from bl.validators import validate_test_settings
+from bl.utils import json_handler
 
 
 class Test:

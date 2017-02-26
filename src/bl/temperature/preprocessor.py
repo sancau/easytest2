@@ -2,7 +2,7 @@
 """
 Temperature data preprocessor.
 """
-from temperature.sensor import Sensor
+from bl.temperature.sensor import Sensor
 
 
 class TemperatureDataPreprocessor:
