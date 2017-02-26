@@ -180,7 +180,7 @@ class ReportBuilder:
     @staticmethod
     def build_main_ctx(test):
         def make_tool_report_string(tool):
-            name = 'Информация о приборе не корректна'
+            name = 'Информация о приборе некорректна'.upper()
             try:
                 name = tool['name']
                 ts = int(str(tool['tests'][0]['date']['$date'])[:-3])  # TODO now its mongo specific
@@ -192,7 +192,15 @@ class ReportBuilder:
                                                                              test_doc)
             except Exception as e:
                 print(e)
-                return name
+                return name + ' (Информация о приборе может быть некорректна)'.upper()
+
+        def make_system_report_object(system):
+            obj = {}
+            for i in ['name', 'yearOfProduction', 'manufacturer',
+                      'factoryNumber', 'techDetails', 'testProgram',
+                      'testMethod']:
+                obj[i] = system.get(i, '[НЕТ ДАННЫХ {}]'.format(i))
+            return obj
 
         def btmode(mode):
             res = mode['processed']['values']
@@ -241,7 +249,7 @@ class ReportBuilder:
                 'responsible_specialist': test.data['responsible_specialist'],
                 'total_additions_count': len(test.data['humidity']) + len(test.data['temperature'])
             },
-            'system': test.data['system'],
+            'system': make_system_report_object(test.data['system']),
             'tools': [make_tool_report_string(t) for t in test.data['tools']],
             'modes': {
                 'summary': {
@@ -277,22 +285,28 @@ class ReportBuilder:
 
         page = 1
         for mode in tmodes:
-            ctx = self.build_temperature_mode_ctx(mode, page, self.test)
-            target = int(mode['mode']['target'])
-            prefix = '+' if target > 0 else ''
-            filename = prefix + str(target) + '.docx'
-            path = os.path.join(self.tmode_path, filename)
-            self.build_docx(get_temperature_template(mode), ctx, path)
-            page += 1
+            try:
+                ctx = self.build_temperature_mode_ctx(mode, page, self.test)
+                target = int(mode['mode']['target'])
+                prefix = '+' if target > 0 else ''
+                filename = prefix + str(target) + '.docx'
+                path = os.path.join(self.tmode_path, filename)
+                self.build_docx(get_temperature_template(mode), ctx, path)
+                page += 1
+            except Exception as e:
+                print(e)
 
         for mode in hmodes:
-            ctx = self.build_humidity_mode_ctx(mode, page, self.test)
-            t_target = str(mode['mode']['target']['temperature'])
-            h_target = str(mode['mode']['target']['humidity'])
-            filename = '_'.join([t_target, h_target]) + '.docx'
-            path = os.path.join(self.hmode_path, filename)
-            self.build_docx(HUMIDITY_MODE_TPL, ctx, path)
-            page += 1
+            try:
+                ctx = self.build_humidity_mode_ctx(mode, page, self.test)
+                t_target = str(mode['mode']['target']['temperature'])
+                h_target = str(mode['mode']['target']['humidity'])
+                filename = '_'.join([t_target, h_target]) + '.docx'
+                path = os.path.join(self.hmode_path, filename)
+                self.build_docx(HUMIDITY_MODE_TPL, ctx, path)
+                page += 1
+            except Exception as e:
+                print(e)
 
     def build_main(self):
         ctx = self.build_main_ctx(self.test)

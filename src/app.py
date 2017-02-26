@@ -6,6 +6,7 @@ Easytest 2 UI Application
 import datetime
 import json
 import sys
+import traceback
 
 from dateutil import parser
 
@@ -403,15 +404,28 @@ class EasyTest(QW.QMainWindow):
                 print(e)
 
     def create_report_handler(self):
-        dir_name = QW.QFileDialog.getExistingDirectory(self, 'Выберите путь для создания протокола')
-        if not dir_name:
-            return
-        else:
-            self.test.create_report(dir_name)
+        try:
+            dir_name = QW.QFileDialog.getExistingDirectory(self, 'Выберите путь для создания протокола')
+            if not dir_name:
+                return
+            else:
+                self.test.create_report(dir_name)
+                msg = QW.QMessageBox()
+                msg.setIcon(QW.QMessageBox.Information)
+                msg.setText('Протокол для расчитанных режимов успешно создан в {}'.format(dir_name))
+                msg.setWindowTitle('Все готово')
+                msg.setStandardButtons(QW.QMessageBox.Ok)
+                msg.exec_()
+        except Exception as e:
+            print(e)
+            et, ev, tb = sys.exc_info()
             msg = QW.QMessageBox()
             msg.setIcon(QW.QMessageBox.Information)
-            msg.setText('Протокол для расчитанных режимов успешно создан в {}'.format(dir_name))
-            msg.setWindowTitle('Все готово')
+            msg.setText(
+                'Ошибка {} при создании протокола: {} Traceback: {}'.format(et, ev,
+                                                                            traceback.format_tb(
+                                                                                tb)))
+            msg.setWindowTitle('Ошибка')
             msg.setStandardButtons(QW.QMessageBox.Ok)
             msg.exec_()
 
@@ -463,9 +477,24 @@ class EasyTest(QW.QMainWindow):
             self.hmodes_list.addItem(list_item)
 
     def on_system_select(self, name):
+        display_keys = [
+            'name', 'manufacturer', 'yearOfProduction',
+            'code', 'inventoryNumber', 'actualPlacement', 'techDetails', 'comment'
+        ]
+
         def get_verbose_key(k):
             """Returns user friendly repr for a system dict key"""
-            return k.upper()  # not implemented yet
+            mapping = {
+                'name': 'Наименование',
+                'manufacturer': 'Производитель',
+                'yearOfProduction': 'Год выпуска',
+                'code': 'Код',
+                'inventoryNumber': 'Инвентарный номер',
+                'actualPlacement': 'Расположение',
+                'comment': 'Примечание',
+                'techDetails': 'Тех. характеристики'
+            }
+            return mapping.get(k, k)
 
         self.system_info.clear()
 
@@ -480,8 +509,8 @@ class EasyTest(QW.QMainWindow):
                 self.test.data['system'] = system
 
                 # system info code
-                for k, v in system.items():
-                    list_item = QListWidgetItem('{} - {}'.format(get_verbose_key(k), v))
+                for k in display_keys:
+                    list_item = QListWidgetItem('{} - {}'.format(get_verbose_key(k), system[k]))
                     self.system_info.addItem(list_item)
 
     def on_available_tool_doubleclick(self, item):
