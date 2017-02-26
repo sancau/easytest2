@@ -1,6 +1,6 @@
 # coding=utf-8
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from docxtpl import DocxTemplate
 
@@ -179,6 +179,21 @@ class ReportBuilder:
 
     @staticmethod
     def build_main_ctx(test):
+        def make_tool_report_string(tool):
+            name = 'Информация о приборе не корректна'
+            try:
+                name = tool['name']
+                ts = int(str(tool['tests'][0]['date']['$date'])[:-3])  # TODO now its mongo specific
+                valid_until = \
+                    (datetime.fromtimestamp(ts) - timedelta(days=1)).strftime('%d.%m.%Y')
+                test_doc = tool['comment']
+
+                return '{}; срок поверки до {}; документ поверки: {}'.format(name, valid_until,
+                                                                             test_doc)
+            except Exception as e:
+                print(e)
+                return name
+
         def btmode(mode):
             res = mode['processed']['values']
             pos_delta = res.get('positive_delta', '')
@@ -218,15 +233,16 @@ class ReportBuilder:
         return {
             'report': {
                 'date': get_verbose_date(datetime.now()),
-                'test_start_date': 'TODO /builder.py 221',
-                'test_end_date': 'TODO /builder.py 222',
-                'next_test_date': 'TODO /builder.py 223',
+                'test_start_date': get_verbose_date(
+                    datetime.strptime(test.data['test_start_date'], '%Y-%m-%d')),
+                'test_end_date': get_verbose_date(
+                    datetime.strptime(test.data['test_end_date'], '%Y-%m-%d')),
                 'specialist': test.data['specialist'],
                 'responsible_specialist': test.data['responsible_specialist'],
                 'total_additions_count': len(test.data['humidity']) + len(test.data['temperature'])
             },
             'system': test.data['system'],
-            'tools': test.data['tools'],
+            'tools': [make_tool_report_string(t) for t in test.data['tools']],
             'modes': {
                 'summary': {
                     'max_tmode': max([mode['mode']['target'] for mode in test.data['temperature']]),
