@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import pandas as pd
 
 from humidity.logic import calculate_mode
@@ -33,11 +35,13 @@ def mode_valid(mode):
         for i in ['humidity', 'temperature'])
 
 
-def calculate(mode_slice):
-    pass
-
-
 def handle_mode(mode):
+    # str to int
+    mode['target']['temperature'] = int(mode['target']['temperature'])
+    mode['target']['humidity'] = int(mode['target']['humidity'])
+    mode['md']['temperature'] = [float(v) for v in mode['md']['temperature']]
+    mode['md']['humidity'] = [float(v) for v in mode['md']['humidity']]
+
     if not mode_valid(mode):
         raise ValueError('Invalid humidity mode data provided')
 

@@ -291,6 +291,7 @@ class EasyTest(QW.QMainWindow):
         self.open_test.triggered.connect(self.open_test_handler)
         self.save.triggered.connect(self.save_test_handler)
         self.save_as.triggered.connect(self.save_test_as_handler)
+        self.create_report.triggered.connect(self.create_report_handler)
 
     def bind_test_to_ui(self):
         def bind(field, value):
@@ -334,6 +335,7 @@ class EasyTest(QW.QMainWindow):
             self.setWindowTitle('EasyTest 2 - Новая аттестация')
             self.save_as.setEnabled(True)
             self.save.setEnabled(False)
+            self.create_report.setEnabled(True)
 
         if self.test:
             reply = QW.QMessageBox.question(self,
@@ -364,6 +366,7 @@ class EasyTest(QW.QMainWindow):
                     self.setWindowTitle('EasyTest 2 - ' + fname[0])
                     self.save_as.setEnabled(True)
                     self.save.setEnabled(True)
+                    self.create_report.setEnabled(True)
                 except Exception as e:
                     print(e)
 
@@ -398,6 +401,19 @@ class EasyTest(QW.QMainWindow):
                 self.statusBar().showMessage('Сохранено в {}'.format(fname[0]), 3000)
             except Exception as e:
                 print(e)
+
+    def create_report_handler(self):
+        dir_name = QW.QFileDialog.getExistingDirectory(self, 'Выберите путь для создания протокола')
+        if not dir_name:
+            return
+        else:
+            self.test.create_report(dir_name)
+            msg = QW.QMessageBox()
+            msg.setIcon(QW.QMessageBox.Information)
+            msg.setText('Протокол для расчитанных режимов успешно создан в {}'.format(dir_name))
+            msg.setWindowTitle('Все готово')
+            msg.setStandardButtons(QW.QMessageBox.Ok)
+            msg.exec_()
 
     # HELPERS
     ################################################################################################

@@ -187,7 +187,6 @@
     <addaction name="save_as"/>
     <addaction name="settings"/>
     <addaction name="separator"/>
-    <addaction name="calculate"/>
     <addaction name="create_report"/>
     <addaction name="separator"/>
     <addaction name="exit"/>

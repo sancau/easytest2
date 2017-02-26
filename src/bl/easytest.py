@@ -3,9 +3,11 @@
 Easytest2 application
 """
 
+import copy
 
 import json
 
+from report.builder import ReportBuilder
 from temperature.interface import TemperatureModeHandler
 from humidity.interface import handle_mode
 
@@ -39,9 +41,6 @@ class Test:
             for index, mode in enumerate(self.data[mode_type]):
                 this = self.data[mode_type][index]['mode']
                 self.data[mode_type][index]['processed'] = handler(this)
-
-    def create_report(self):
-        raise NotImplementedError('This method is not implemented yet')
 
     def save_as(self, path):  # saves the test object as json to given path
         with open(path, 'w+', encoding='UTF8') as data_file:
@@ -82,3 +81,10 @@ class Test:
             self.data['humidity'].append({'mode': mode})
         else:
             print('Validation errors:', errors)
+
+    def create_report(self, path):
+        test = copy.deepcopy(self)
+        test.calculate()
+        builder = ReportBuilder(test, path)
+        builder.build_additions()
+        builder.build_main()

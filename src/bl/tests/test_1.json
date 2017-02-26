@@ -1,6 +1,7 @@
 {
-  "date_created": "2017-02-08T00:29:55.202719",
+  "date_created": "2017-02-26T13:08:45.465951",
   "humidity": [],
+  "next_test_date": null,
   "report": null,
   "responsible_specialist": "Ксенофонтов Б.А.",
   "settings": {
@@ -2296,6 +2297,8 @@
       }
     }
   ],
+  "test_end_date": null,
+  "test_start_date": null,
   "tools": [
     "GTH 5050",
     "Гидрометр ФЫ-2"
