@@ -1,5 +1,8 @@
 # coding=utf-8
 import os
+import sys
+import traceback
+
 from datetime import datetime, timedelta
 
 from dateutil import parser
@@ -296,7 +299,9 @@ class ReportBuilder:
                 self.build_docx(get_temperature_template(mode), ctx, path)
                 page += 1
             except Exception as e:
-                print(e)
+                ex_t, ex_v, tb = sys.exc_info()
+                print(ex_t, ex_v)
+                print(traceback.format_tb(tb))
 
         for mode in hmodes:
             try:
