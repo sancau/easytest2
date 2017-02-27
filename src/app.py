@@ -8,6 +8,8 @@ import json
 import sys
 import traceback
 
+import requests
+
 from dateutil import parser
 
 from PyQt5 import uic, QtWidgets as QW
@@ -269,12 +271,12 @@ class EasyTest(QW.QMainWindow):
         self.test = None
         self.children = []
 
-        with open('inventory_data/systems.json', 'r', encoding='utf-8') as f:
-            db_systems = [s for s in json.loads(f.read()) if s['purpose'] == 'climatic']
-            self.db_systems = sorted(db_systems, key=lambda s: (s['name']))
+        systems = requests.get('http://sqlisp:5000/inventory/systems').json()
+        systems = [s for s in systems if s['purpose'] == 'climatic']
+        self.db_systems = sorted(systems, key=lambda s: (s['name']))
 
-        with open('inventory_data/tools.json', 'r', encoding='utf-8') as f:
-            self.db_tools = json.loads(f.read())
+        tools = requests.get('http://sqlisp:5000/inventory/tools').json()
+        self.db_tools = tools
 
         self.init_ui()
 

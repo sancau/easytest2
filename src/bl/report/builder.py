@@ -2,6 +2,8 @@
 import os
 from datetime import datetime, timedelta
 
+from dateutil import parser
+
 from docxtpl import DocxTemplate
 
 from bl.report.utils import get_verbose_date
@@ -183,9 +185,9 @@ class ReportBuilder:
             name = 'Информация о приборе некорректна'.upper()
             try:
                 name = tool['name']
-                ts = int(str(tool['tests'][0]['date']['$date'])[:-3])  # TODO now its mongo specific
+                date = tool['tests'][0]['date']
                 valid_until = \
-                    (datetime.fromtimestamp(ts) - timedelta(days=1)).strftime('%d.%m.%Y')
+                    (parser.parse(date) - timedelta(days=1)).strftime('%d.%m.%Y')
                 test_doc = tool['comment']
 
                 return '{}; срок поверки до {}; документ поверки: {}'.format(name, valid_until,
