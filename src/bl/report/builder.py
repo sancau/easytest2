@@ -243,6 +243,20 @@ class ReportBuilder:
                 'verbose_max_deviation': get_verbose_max_dev_hum(res['max_allowed_deviation'])
             }
 
+        try:  # TODO think of better solution
+            max_hmode_hum = max([mode['mode']['target']['humidity'] for mode in test.data['humidity']])
+            min_hmode_temp = min([mode['mode']['target']['temperature'] for mode in test.data['humidity']])
+            max_hmode_temp = max([mode['mode']['target']['temperature'] for mode in test.data['humidity']])
+            hmax_deviation = max([mode['processed']['humidity_deviation'] for mode in test.data['humidity']])
+            hmax_md_delta = max([mode['processed']['md_delta_humidity'] for mode in test.data['humidity']])
+        except Exception as e:
+            print(e)
+            max_hmode_hum = None
+            min_hmode_temp = None
+            max_hmode_temp = None
+            hmax_deviation = None
+            hmax_md_delta = None
+
         return {
             'report': {
                 'date': get_verbose_date(datetime.now()),
@@ -260,9 +274,10 @@ class ReportBuilder:
                 'summary': {
                     'max_tmode': max([mode['mode']['target'] for mode in test.data['temperature']]),
                     'min_tmode': min([mode['mode']['target'] for mode in test.data['temperature']]),
-                    'max_hmode_hum': max([mode['mode']['target']['humidity'] for mode in test.data['humidity']]),  # TODO
-                    'min_hmode_temp': min([mode['mode']['target']['temperature'] for mode in test.data['humidity']]),  # TODO
-                    'max_hmode_temp': max([mode['mode']['target']['temperature'] for mode in test.data['humidity']]),  # TODO
+
+                    'max_hmode_hum': max_hmode_hum,
+                    'min_hmode_temp': min_hmode_temp,
+                    'max_hmode_temp': max_hmode_temp,
 
                     'tmax_deviation': max([mode['processed']['values']['deviation'] for mode in test.data['temperature']]),
                     'tmax_md_delta': max([mode['processed']['values']['md_delta'] for mode in test.data['temperature']]),
@@ -272,8 +287,8 @@ class ReportBuilder:
                               mode['processed']['values'].get('negative_delta', 0)])
                                                             for mode in test.data['temperature']]),
 
-                    'hmax_deviation': max([mode['processed']['humidity_deviation'] for mode in test.data['humidity']]),  # TODO
-                    'hmax_md_delta': max([mode['processed']['md_delta_humidity'] for mode in test.data['humidity']])  # TODO
+                    'hmax_deviation': hmax_deviation,
+                    'hmax_md_delta': hmax_md_delta
                 },
                 'tmodes': [btmode(mode) for mode in sorted(test.data['temperature'], key=lambda k: k['mode']['target'])],
 

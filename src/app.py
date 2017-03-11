@@ -271,11 +271,11 @@ class EasyTest(QW.QMainWindow):
         self.test = None
         self.children = []
 
-        systems = requests.get('http://sqlisp:5000/inventory/systems').json()
+        systems = [] # requests.get('http://sqlisp:5000/inventory/systems').json()
         systems = [s for s in systems if s['purpose'] == 'climatic']
         self.db_systems = sorted(systems, key=lambda s: (s['name']))
 
-        tools = requests.get('http://sqlisp:5000/inventory/tools').json()
+        tools = [] # requests.get('http://sqlisp:5000/inventory/tools').json()
         self.db_tools = tools
 
         self.init_ui()
