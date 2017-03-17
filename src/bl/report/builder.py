@@ -244,11 +244,21 @@ class ReportBuilder:
             }
 
         try:  # TODO think of better solution
+            # HUM
             max_hmode_hum = max([mode['mode']['target']['humidity'] for mode in test.data['humidity']])
             min_hmode_temp = min([mode['mode']['target']['temperature'] for mode in test.data['humidity']])
             max_hmode_temp = max([mode['mode']['target']['temperature'] for mode in test.data['humidity']])
             hmax_deviation = max([mode['processed']['humidity_deviation'] for mode in test.data['humidity']])
             hmax_md_delta = max([mode['processed']['md_delta_humidity'] for mode in test.data['humidity']])
+
+            # TEMP
+            tmax_deviation = max([mode['processed']['values']['deviation'] for mode in test.data['temperature']])
+            tmax_md_delta = max([mode['processed']['values']['md_delta'] for mode in test.data['temperature']])
+            tmax_amplitude = max(
+                [max([mode['processed']['values'].get('positive_delta', 0),
+                      mode['processed']['values'].get('negative_delta', 0)])
+                 for mode in test.data['temperature']])
+
         except Exception as e:
             print(e)
             max_hmode_hum = None
@@ -256,6 +266,9 @@ class ReportBuilder:
             max_hmode_temp = None
             hmax_deviation = None
             hmax_md_delta = None
+            tmax_deviation = None
+            tmax_md_delta = None
+            tmax_amplitude = None
 
         return {
             'report': {
@@ -279,21 +292,20 @@ class ReportBuilder:
                     'min_hmode_temp': min_hmode_temp,
                     'max_hmode_temp': max_hmode_temp,
 
-                    'tmax_deviation': max([mode['processed']['values']['deviation'] for mode in test.data['temperature']]),
-                    'tmax_md_delta': max([mode['processed']['values']['md_delta'] for mode in test.data['temperature']]),
+                    'tmax_deviation': tmax_deviation,
+                    'tmax_md_delta': tmax_md_delta,
 
-                    'tmax_amplitude': max(
-                        [max([mode['processed']['values'].get('positive_delta', 0),
-                              mode['processed']['values'].get('negative_delta', 0)])
-                                                            for mode in test.data['temperature']]),
+                    'tmax_amplitude': tmax_amplitude,
 
                     'hmax_deviation': hmax_deviation,
                     'hmax_md_delta': hmax_md_delta
                 },
-                'tmodes': [btmode(mode) for mode in sorted(test.data['temperature'], key=lambda k: k['mode']['target'])],
+                'tmodes': [btmode(mode) for mode in sorted(test.data['temperature'], key=lambda
+                    k: k['mode']['target']) if mode['processed']['done']],
 
                 # TODO sort by target_hum then by target_temp
-                'hmodes': [ bhmode(mode) for mode in sorted(test.data['humidity'], key=lambda k: k['mode']['target']['humidity'])],
+                'hmodes': [bhmode(mode) for mode in sorted(test.data['humidity'], key=lambda k:
+                    k['mode']['target']['humidity']) if mode['processed']['done']],
             }
         }
 
@@ -334,5 +346,6 @@ class ReportBuilder:
         ctx = self.build_main_ctx(self.test)
         system_description = self.test.data['system']['name'] or 'UNKNOWN_SYSTEM'
         filename = 'Протокол аттестации ' + system_description + '.docx'
+        filename = filename.replace(r'\\', ' ').replace('/', ' ')
         path = os.path.join(self.report_path, filename)
         self.build_docx(MAIN_TPL, ctx, path)
