@@ -281,7 +281,10 @@ class ReportBuilder:
                     datetime.strptime(test.data['test_end_date'], '%Y-%m-%d')),
                 'specialist': test.data['specialist'],
                 'responsible_specialist': test.data['responsible_specialist'],
-                'total_additions_count': len(test.data['humidity']) + len(test.data['temperature'])
+                'total_additions_count': (len([i for i in test.data['humidity'] if i[
+                    'processed']['result']['summary_mode_result']]) +
+                                         len([i for i in test.data['temperature'] if i[
+                                             'processed']['done']]))
             },
             'system': make_system_report_object(test.data['system']),
             'tools': [make_tool_report_string(t) for t in test.data['tools']],
