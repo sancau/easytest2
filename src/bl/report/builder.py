@@ -116,9 +116,11 @@ class ReportBuilder:
             max_hum_dev = abs(max_hum_dev)
             res = round(max_hum_dev - float(md_delta), hmode['mode']['round_to'])
 
+            word = 'СООТВЕТСТВУЕТ' if delta < res else 'НЕ СООТВЕТСТВУЕТ'
+
             return ('\u0394\u03C6{} = {} cтрого меньше |+/- \u0394\u03C6нор|'
-                    ' - \u0394\u03C6иy  = {} – {}  = {}    СООТВЕТСТВУЕТ')\
-                .format(notation, delta, max_hum_dev, md_delta, res)
+                    ' - \u0394\u03C6иy  = {} – {}  = {}    {}')\
+                .format(notation, delta, max_hum_dev, md_delta, res, word)
 
         def b_delta_string(value, notation):
             if not float(value):
@@ -285,8 +287,10 @@ class ReportBuilder:
             'tools': [make_tool_report_string(t) for t in test.data['tools']],
             'modes': {
                 'summary': {
-                    'max_tmode': max([mode['mode']['target'] for mode in test.data['temperature']]),
-                    'min_tmode': min([mode['mode']['target'] for mode in test.data['temperature']]),
+                    'max_tmode': max([int(mode['mode']['target']) for mode in test.data[
+                        'temperature']]),
+                    'min_tmode': min([int(mode['mode']['target']) for mode in test.data[
+                        'temperature']]),
 
                     'max_hmode_hum': max_hmode_hum,
                     'min_hmode_temp': min_hmode_temp,
@@ -305,7 +309,8 @@ class ReportBuilder:
 
                 # TODO sort by target_hum then by target_temp
                 'hmodes': [bhmode(mode) for mode in sorted(test.data['humidity'], key=lambda k:
-                    k['mode']['target']['humidity']) if mode['processed']['done']],
+                    k['mode']['target']['humidity']) if mode['processed']['result'][
+                    'summary_mode_result']],
             }
         }
 

@@ -55,6 +55,10 @@ def handle_mode(mode):
     result = {}
     while True:
         log_slice = pd.DataFrame(log[cursor: cursor + slice_length])
+
+        if log_slice.shape[0] < 10:
+            return result
+
         try:
             log_slice.DT1_hum = log_slice.DT1_hum.astype(float)
             log_slice.DT2_hum = log_slice.DT2_hum.astype(float)
@@ -65,7 +69,7 @@ def handle_mode(mode):
 
         result = calculate_mode(mode, log_slice)
 
-        if log_slice.shape[0] < 10 or result['result']['summary_mode_result']:
+        if result['result']['summary_mode_result']:
             return result  # if test totally passed return result or log ended
         else:
             cursor += 1  # move further

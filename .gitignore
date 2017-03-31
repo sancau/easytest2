@@ -92,3 +92,5 @@ ENV/
 reports
 src/inventory_data
 test
+test_1
+test_2
