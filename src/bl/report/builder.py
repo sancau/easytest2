@@ -329,7 +329,8 @@ class ReportBuilder:
                 ctx = self.build_temperature_mode_ctx(mode, page, self.test)
                 target = int(mode['mode']['target'])
                 prefix = '+' if target > 0 else ''
-                filename = prefix + str(target) + '.docx'
+                fail_mark = '' if mode['processed']['done'] else '[ТЕСТ НЕ ПРОЙДЕН]_'
+                filename = fail_mark + prefix + str(target) + '.docx'
                 path = os.path.join(self.tmode_path, filename)
                 self.build_docx(get_temperature_template(mode), ctx, path)
                 page += 1
@@ -343,7 +344,11 @@ class ReportBuilder:
                 ctx = self.build_humidity_mode_ctx(mode, page, self.test)
                 t_target = str(mode['mode']['target']['temperature'])
                 h_target = str(mode['mode']['target']['humidity'])
-                filename = '_'.join([t_target, h_target]) + '.docx'
+                fail_mark = '' if mode['processed']['result']['summary_mode_result'] else '[ТЕСТ ' \
+                                                                                          'НЕ ' \
+                                                                                          'ПРОЙДЕН]_'
+                filename = fail_mark + '_'.join([t_target, h_target]) + '.docx'
+
                 path = os.path.join(self.hmode_path, filename)
                 self.build_docx(HUMIDITY_MODE_TPL, ctx, path)
                 page += 1
