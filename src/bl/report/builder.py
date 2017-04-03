@@ -45,8 +45,10 @@ class ReportBuilder:
             md_delta = tmode['processed']['values']['md_delta']
             res = round(2 - float(md_delta), tmode['mode']['round_to'])
 
+            word = 'СООТВЕТСТВУЕТ' if delta < res else 'НЕ СООТВЕТСТВУЕТ'
+
             return ('\u0394{} = {} cтрого меньше |+/- \u0394нор|'
-                    ' - \u0394 иy  = 2 – {}  = {}    СООТВЕТСТВУЕТ').format(notation, delta, md_delta, res)
+                    ' - \u0394 иy  = 2 – {}  = {}    {}').format(notation, delta, md_delta, res, word)
 
         def b_delta_string(value, notation):
             if not float(value):
