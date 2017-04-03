@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import copy
+
 from datetime import datetime
 
 from bl.temperature.meta import Meta
@@ -45,7 +47,7 @@ class TemperatureModeHandler:
         for chunk in preprocessor.get_merged_chunk(
                 data_chunks=data_chunks,
                 meta=meta):
-            result = processor.process(chunk, meta)
+            result = processor.process(chunk, copy.deepcopy(meta))
             if result['done']:
                 break
         return result

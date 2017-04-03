@@ -71,6 +71,7 @@ class TemperatureDataProcessor:
                     [s.average, s.max_temperature, s.min_temperature,
                      s.positive_deviation, s.negative_deviation]
 
+            pass
             meta.logs = [log.__dict__ for log in meta.logs]
 
             res['values'] = {

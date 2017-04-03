@@ -80,6 +80,9 @@ def calculate_mode(mode, log_slice):
         'result': {}
     }
 
+    output['result']['positive'] = {'passed': False}
+    output['result']['negative'] = {'passed': False}
+
     if positive_deviation:
         tmp = rounded(abs(humidity_max_deviation[0]) - md_delta_humidity)
         output['result']['positive'] = {
