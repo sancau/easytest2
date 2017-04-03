@@ -399,9 +399,12 @@ class EasyTest(QW.QMainWindow):
             return
         else:
             try:
-                self.test.save_as(fname[0])
+                filename = fname[0]
+                if filename[(len(filename) - 4):] != '.et2':
+                    filename += '.et2'
+                self.test.save_as(filename)
                 self.save.setEnabled(True)
-                self.statusBar().showMessage('Сохранено в {}'.format(fname[0]), 3000)
+                self.statusBar().showMessage('Сохранено в {}'.format(filename), 3000)
             except Exception as e:
                 print(e)
 
