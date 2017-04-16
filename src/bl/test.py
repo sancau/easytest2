@@ -202,18 +202,6 @@ t.save()
 print('Calculated and saved to:', t.path)
 
 
-# TEMPLATE
-
-# user specifies output path for report
-report_path = r'C:\Users\2065\Desktop\easytest2\reports'   # ask user every time
-
-
-# user can generate report files in MS WORD format
-def make_report():
-    builder = ReportBuilder(t, report_path)
-    builder.build_additions()
-    builder.build_main()
-
-make_report()
+t.create_report('output')
 
 print('Reports created.')

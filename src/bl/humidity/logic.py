@@ -38,19 +38,33 @@ def calculate_mode(mode, log_slice):
         hum_max_dev_settings.get(str(target_humidity),
                                  hum_max_dev_settings['default'])
 
-    max_mean_humidity = max(mean(dt1_humidity),
-                            mean(dt2_humidity),
-                            mean(kt_humidity))
+    mean_dt1_hum = mean(dt1_humidity)
+    mean_dt2_hum = mean(dt2_humidity)
+    mean_kt_temp = mean(kt_temperature)
+    mean_kt_hum = mean(kt_humidity)
+    mean_md_temp = mean(mode['md']['temperature'])
+    mean_md_hum = mean(mode['md']['humidity'])
 
-    min_mean_humidity = min(mean(dt1_humidity),
-                            mean(dt2_humidity),
-                            mean(kt_humidity))
+    max_mean_humidity = max(mean_dt1_hum,
+                            mean_dt2_hum,
+                            mean_kt_hum)
 
-    md_delta_humidity = get_abs_distance(mean(kt_humidity),
-                                         mean(mode['md']['humidity']))
+    min_mean_humidity = min(mean_dt1_hum,
+                            mean_dt2_hum,
+                            mean_kt_hum)
 
-    positive_deviation = get_abs_distance(max_mean_humidity, target_humidity)
-    negative_deviation = get_abs_distance(min_mean_humidity, target_humidity)
+    md_delta_humidity = get_abs_distance(mean_kt_hum,
+                                         mean_md_hum)
+
+    if max_mean_humidity > target_humidity:
+        positive_deviation = get_abs_distance(max_mean_humidity, target_humidity)
+    else:
+        positive_deviation = 0
+
+    if min_mean_humidity < target_humidity:
+        negative_deviation = get_abs_distance(min_mean_humidity, target_humidity)
+    else:
+        negative_deviation = 0
 
     output = {  # resulting object with all the necessary data
         'date': date,
@@ -80,8 +94,8 @@ def calculate_mode(mode, log_slice):
         'result': {}
     }
 
-    output['result']['positive'] = {'passed': False}
-    output['result']['negative'] = {'passed': False}
+    output['result']['positive'] = {'passed': True}
+    output['result']['negative'] = {'passed': True}
 
     if positive_deviation:
         tmp = rounded(abs(humidity_max_deviation[0]) - md_delta_humidity)
