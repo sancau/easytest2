@@ -47,9 +47,9 @@ class TemperatureDataProcessor:
                 res['reason'] = TEST_FAIL_AMPLITUDE
                 return res
 
-            # should cp and md columns be included into t_max/min calculation ?
-            t_max = max([sensor.average for sensor in data])
-            t_min = min([sensor.average for sensor in data])
+            # should cp and md columns be included into t_max/min calculation ? -> YES WE SHOULD >>
+            t_max = max([sensor.average for sensor in data[:-2]])
+            t_min = min([sensor.average for sensor in data[:-2]])
             t_md = [sensor.average for sensor in data if
                     sensor.name == 'md'][0]
             t_cp = [sensor.average for sensor in data if
