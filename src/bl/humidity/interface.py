@@ -56,14 +56,16 @@ def handle_mode(mode):
     while True:
         log_slice = pd.DataFrame(log[cursor: cursor + slice_length])
 
+        rt = mode['round_to']
+
         if log_slice.shape[0] < 10:
             return result
 
         try:
-            log_slice.DT1_hum = log_slice.DT1_hum.astype(float)
-            log_slice.DT2_hum = log_slice.DT2_hum.astype(float)
-            log_slice.KT_temp = log_slice.KT_temp.astype(float)
-            log_slice.KT_hum = log_slice.KT_hum.astype(float)
+            log_slice.DT1_hum = log_slice.DT1_hum.astype(float).round(rt)
+            log_slice.DT2_hum = log_slice.DT2_hum.astype(float).round(rt)
+            log_slice.KT_temp = log_slice.KT_temp.astype(float).round(rt)
+            log_slice.KT_hum = log_slice.KT_hum.astype(float).round(rt)
         except ValueError:
             return result
 
