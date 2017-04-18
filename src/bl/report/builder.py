@@ -6,6 +6,7 @@ import traceback
 from datetime import datetime, timedelta
 
 from dateutil import parser
+from dateutil.relativedelta import relativedelta
 
 from docxtpl import DocxTemplate
 
@@ -194,7 +195,8 @@ class ReportBuilder:
                 name = tool['name']
                 date = tool['tests'][0]['date']
                 valid_until = \
-                    (parser.parse(date) - timedelta(days=1)).strftime('%d.%m.%Y')
+                    (parser.parse(date) + relativedelta(years=1)).strftime(
+                        '%d.%m.%Y')
                 test_doc = tool['comment']
 
                 return '{}; срок поверки до {}; документ поверки: {}'.format(name, valid_until,
