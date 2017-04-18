@@ -55,8 +55,15 @@ class TemperatureDataProcessor:
             t_cp = [sensor.average for sensor in data if
                     sensor.name == 'cp'][0]
 
-            positive_delta = round(abs(abs(t_max) - abs(meta.target)), 1)  # TODO
-            negative_delta = round(abs(abs(t_min) - abs(meta.target)), 1)
+            positive_delta = 0
+            negative_delta = 0
+
+            if t_max > meta.target:
+                positive_delta = round(abs(abs(t_max) - abs(meta.target)), 1)
+
+            if t_min < meta.target:
+                negative_delta = round(abs(abs(t_min) - abs(meta.target)), 1)
+
             md_delta = round(abs(abs(t_md) - abs(t_cp)), 1)
             deviation = round(abs(abs(t_max) - abs(t_min)), 1)
             max_deviation = meta.max_deviation
